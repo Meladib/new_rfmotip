@@ -1,0 +1,39 @@
+SUPER_CONFIG_PATH: ./configs/r50_deformable_detr_motip_dancetrack.yaml
+
+CKPT_PATH: rfdetr_dancetrack_motip/checkpoint_best_total.pth
+DETR_FRAMEWORK: rf_detr
+
+# DETR_PRETRAIN is intentionally null for rf_detr.
+# The fine-tuned weights are loaded from CKPT_PATH inside
+# models/motip/__init__.py build().  train.py guards the
+# load_detr_pretrain call so it is skipped for this framework.
+DETR_PRETRAIN: null
+
+# Must be 1 (person) to match the fine-tuned RF-DETR checkpoint.
+# RF-DETR internally adds 1 (args.num_classes + 1), so class_embed
+# has shape [2, D].  Setting NUM_CLASSES > 1 here would trigger a
+# class_embed shape mismatch in load_detr_pretrain.
+NUM_CLASSES: 1
+
+# RF-DETR DINOv2 backbone requires H and W to be divisible by
+# patch_size * num_windows = 16 * 2 = 32 (asserted in dinov2.py).
+# MOTIP's collate_fn reads this from the meta dict and passes it to
+# nested_tensor_from_tensor_list, which rounds H and W up to the
+# nearest multiple of 32 before batch padding.
+# For deformable_detr, leave this absent or 0 (no constraint).
+SIZE_DIVISIBILITY: 32
+DATA_ROOT: /data/pos+mot/Datadir/
+# Training Strategies:
+EPOCHS: 20
+LR: 1.0e-4
+LR_WARMUP_EPOCHS: 0
+USE_DECODER_CHECKPOINT: True
+AUG_NUM_GROUPS: 1
+
+SAMPLE_LENGTHS: [5]
+
+SCHEDULER_MILESTONES: [15, 18]
+RESUME_MODEL: ./outputs/rfmotip_dancetrack/checkpoint_2.pth
+NUM_TRAINING_IDS: 20
+
+
