@@ -108,6 +108,10 @@ def _build_and_load_rfdetr(checkpoint_path, device):
             if k.startswith("detr.")
         }
 
+    # Drop keys with shape mismatches (e.g. class_embed when num_classes differs).
+    model_ref = model.state_dict()
+    model_state = {k: v for k, v in model_state.items()
+                   if k not in model_ref or v.shape == model_ref[k].shape}
     missing, unexpected = model.load_state_dict(model_state, strict=False)
     if missing:
         print(f"[WARN] Missing keys in checkpoint: {missing[:5]}{'…' if len(missing)>5 else ''}")
