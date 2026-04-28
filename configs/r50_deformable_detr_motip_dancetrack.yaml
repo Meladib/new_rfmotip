@@ -7,7 +7,7 @@ SEED: 42
 NUM_WORKERS: 6
 PREFETCH_FACTOR: 6
 DEVICE: cuda
-
+FREEZE_DETR: True
 # Data settings:
 # 1. paths:
 DATA_ROOT: ./datasets/
