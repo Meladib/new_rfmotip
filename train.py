@@ -100,10 +100,16 @@ def train_engine(config: dict):
 
     # Build MOTIP model:
     model, detr_criterion = build_motip(config=config)
+    if config.get("FREEZE_DETR", False):
+        for param in model.detr.parameters():
+            param.requires_grad = False
+        print(f"[train] RF-DETR fully frozen: "
+            f"{sum(1 for p in model.detr.parameters())} params frozen.")
     # Load the pre-trained DETR.
     # Skip for rf_detr: the fine-tuned weights are already loaded from
     # CKPT_PATH inside models/motip/__init__.py build().  A second load
     # with the MOTIP NUM_CLASSES would corrupt the class_embed weights.
+    """
     if config.get("DETR_FRAMEWORK", "deformable_detr").lower() != "rf_detr":
         load_detr_pretrain(
             model=model, pretrain_path=config["DETR_PRETRAIN"], num_classes=config["NUM_CLASSES"],
@@ -117,6 +123,7 @@ def train_engine(config: dict):
             "Skipping load_detr_pretrain for rf_detr: "
             "weights already loaded from CKPT_PATH in build()."
         )
+    """
     # Build Loss Function:
     id_criterion = build_id_criterion(config=config)
 
