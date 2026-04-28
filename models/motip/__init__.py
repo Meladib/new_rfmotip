@@ -62,6 +62,20 @@ def build(config: dict):
             args_ckpt = ckpt["args"]
             detr = build_model(args=args_ckpt)
             detr_criterion, _ = build_criterion_and_postprocessors(args=args_ckpt)
+            ckpt_model = ckpt.get("model", None)
+            if ckpt_model is not None:
+                # Filter out class-head keys that mismatch num_classes between checkpoint and model
+                model_state = detr.state_dict()
+                filtered = {k: v for k, v in ckpt_model.items()
+                            if k in model_state and v.shape == model_state[k].shape}
+                missing, unexpected = detr.load_state_dict(filtered, strict=False)
+                skipped = [k for k in ckpt_model if k not in filtered]
+                print(f"[build] RF-DETR weights loaded. Missing: {len(missing)}, Unexpected: {len(unexpected)}, Skipped (shape mismatch): {len(skipped)}")
+                if skipped:
+                    print(f"[build] Skipped keys: {skipped[:5]} ...")
+            else:
+                print("[build] WARNING: no 'model' key in checkpoint. Detector starts from random weights.")
+
         case _:
             raise NotImplementedError(f"DETR framework {config['DETR_FRAMEWORK']} is not supported.")
 
