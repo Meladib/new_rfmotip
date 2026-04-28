@@ -1,9 +1,0 @@
-SUPER_CONFIG_PATH: ./configs/r50_deformable_detr_motip_dancetrack.yaml
-
-
-CKPT_PATH : rfdetr_dancetrack_motip/checkpoint_best_total.pth
-DETR_FRAMEWORK: rf_detr
-# Training Strategies:
-EPOCHS: 8
-LR: 1.0e-4
-LR_WARMUP_EPOCHS: 0
