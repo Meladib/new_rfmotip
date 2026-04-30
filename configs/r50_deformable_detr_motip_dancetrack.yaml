@@ -107,14 +107,14 @@ SEPARATE_CLIP_NORM: True
 USE_ACCELERATE_CLIP_NORM: True
 
 # Resumes and Pretrains:
-DETR_PRETRAIN: ./pretrains/r50_deformable_detr_coco_dancetrack.pth
-RESUME_MODEL:
+DETR_PRETRAIN: null
+RESUME_MODEL: null
 RESUME_OPTIMIZER: True
 RESUME_SCHEDULER: True
 RESUME_STATES: True
 
 # Inference settings:
-INFERENCE_MODEL:            # the model path for inference
+INFERENCE_MODEL:          # the model path for inference
 INFERENCE_DATASET: DanceTrack
 INFERENCE_SPLIT: val
 INFERENCE_MODE: evaluate    # evaluate or submit
