@@ -60,19 +60,22 @@ def build(config: dict):
             ckpt_path = config["CKPT_PATH"]
             ckpt = torch.load(ckpt_path, map_location="cpu", weights_only=False)
             args_ckpt = ckpt["args"]
+            args_ckpt.num_classes -= 1
             detr = build_model(args=args_ckpt)
+            args_ckpt.num_classes += 1
             detr_criterion, _ = build_criterion_and_postprocessors(args=args_ckpt)
             ckpt_model = ckpt.get("model", None)
             if ckpt_model is not None:
                 # Filter out class-head keys that mismatch num_classes between checkpoint and model
                 model_state = detr.state_dict()
-                filtered = {k: v for k, v in ckpt_model.items()
-                            if k in model_state and v.shape == model_state[k].shape}
+                filtered = {}
+                for k, v in ckpt_model.items():
+                    bare_k = k[5:] if k.startswith('detr.') else k
+                    if bare_k in model_state and v.shape == model_state[bare_k].shape:
+                        filtered[bare_k] = v
                 missing, unexpected = detr.load_state_dict(filtered, strict=False)
-                skipped = [k for k in ckpt_model if k not in filtered]
-                print(f"[build] RF-DETR weights loaded. Missing: {len(missing)}, Unexpected: {len(unexpected)}, Skipped (shape mismatch): {len(skipped)}")
-                if skipped:
-                    print(f"[build] Skipped keys: {skipped[:5]} ...")
+                print(f"[build] RF-DETR weights loaded. Matched: {len(filtered)}, "
+                    f"Missing: {len(missing)}, Unexpected: {len(unexpected)}")
             else:
                 print("[build] WARNING: no 'model' key in checkpoint. Detector starts from random weights.")
 
