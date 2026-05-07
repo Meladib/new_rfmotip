@@ -21,10 +21,11 @@ NUM_CLASSES: 1
 # nested_tensor_from_tensor_list, which rounds H and W up to the
 # nearest multiple of 32 before batch padding.
 # For deformable_detr, leave this absent or 0 (no constraint).
+RESUME_MODEL: outputs/rfmotip_dancetrack_ctsv/checkpoint_7.pth
 SIZE_DIVISIBILITY: 32
 DATA_ROOT: /data/pos+mot/Datadir/
 # Training Strategies:
-EPOCHS: 8
+EPOCHS: 12
 LR: 1.0e-4
 LR_WARMUP_EPOCHS: 0
 SCHEDULER_MILESTONES: [6, 9]
@@ -36,3 +37,11 @@ AUG_NUM_GROUPS: 6
 USE_DECODER_CHECKPOINT: False
 NUM_ID_DECODER_LAYERS: 6
 DETR_NUM_TRAIN_FRAMES: 0
+
+CONTRASTIVE_WEIGHT:    0.05
+CONTRASTIVE_TEMP:      0.3
+CONTRASTIVE_PROJ_DIM:  128
+CONTRASTIVE_WARMUP:    500
+
+INFERENCE_DTYPE: FP16
+NUM_WORKERS: 0
