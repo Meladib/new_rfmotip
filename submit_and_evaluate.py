@@ -188,8 +188,8 @@ def submit_and_evaluate_one_model(
             dataset=sequence_dataset,
             batch_size=1,
             shuffle=False,
-            num_workers=4,
-            pin_memory=True,
+            num_workers=0,
+            pin_memory=False,
             collate_fn=lambda x: x[0],
         )
         # sequence_loader = accelerator.prepare(sequence_loader)
