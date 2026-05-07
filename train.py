@@ -15,6 +15,7 @@ from torchvision.transforms import v2
 from typing import Any, Generator, List
 
 from models.motip import build as build_motip
+from models.motip.contrastive_loss import build_contrastive_criterion
 from models.motip.id_criterion import build as build_id_criterion
 from runtime_option import runtime_option
 from utils.misc import yaml_to_dict, set_seed
@@ -126,13 +127,22 @@ def train_engine(config: dict):
     """
     # Build Loss Function:
     id_criterion = build_id_criterion(config=config)
-
+    contrastive_criterion = build_contrastive_criterion(config=config) if not config.get("ONLY_DETR", False) else None
+    if contrastive_criterion is not None:
+        contrastive_criterion = contrastive_criterion.to(accelerator.device)
     # Build Optimizer:
     if config["DETR_NUM_TRAIN_FRAMES"] == 0:
         for n, p in model.named_parameters():
             if "detr" in n:
                 p.requires_grad = False     # only train the MOTIP part.
     param_groups = get_param_groups(model, config)
+    if contrastive_criterion is not None:
+        param_groups.append({
+            "params": list(contrastive_criterion.parameters()),
+            "lr": config["LR"],
+            "weight_decay": config.get("WEIGHT_DECAY", 1e-4),
+        })
+
     optimizer = AdamW(
         params=param_groups,
         lr=config["LR"],
@@ -190,6 +200,7 @@ def train_engine(config: dict):
             model=model,
             detr_criterion=detr_criterion,
             id_criterion=id_criterion,
+            contrastive_criterion=contrastive_criterion,
             optimizer=optimizer,
             only_detr=only_detr,
             lr_warmup_epochs=config["LR_WARMUP_EPOCHS"],
@@ -294,6 +305,7 @@ def train_one_epoch(
         detr_num_checkpoint_frames: int,
         detr_criterion_batch_len: int,
         use_decoder_checkpoint: bool,
+        contrastive_criterion=None,
         accumulate_steps: int = 1,
         separate_clip_norm: bool = True,
         max_clip_norm: float = 0.1,
@@ -319,6 +331,10 @@ def train_one_epoch(
     model_without_ddp = get_model(model)
     detr_params = []
     other_params = []
+    if contrastive_criterion is not None:
+        for param in contrastive_criterion.parameters():
+            other_params.append(param)
+
     for name, param in model_without_ddp.named_parameters():
         if "detr" in name:
             detr_params.append(param)
@@ -463,6 +479,7 @@ def train_one_epoch(
                 detr_outputs=detr_outputs, annotations=annotations, detr_indices=detr_indices,
             )
             seq_info = model(seq_info=seq_info, part="trajectory_modeling")
+            con_loss, con_log = contrastive_criterion(seq_info) if contrastive_criterion is not None else (None, None)
             id_logits, id_gts, id_masks = model(
                 seq_info=seq_info,
                 part="id_decoder",
@@ -474,6 +491,7 @@ def train_one_epoch(
             pass
         else:
             id_loss = None
+            con_loss, con_log = None, None
 
         # Backward:
         with accelerator.autocast():
@@ -481,12 +499,22 @@ def train_one_epoch(
             detr_loss = sum(
                 detr_loss_dict[k] * detr_weight_dict[k] for k in detr_loss_dict.keys() if k in detr_weight_dict
             )
-            loss = detr_loss + (id_loss if id_loss is not None else 0) * id_criterion.weight
+            loss = (
+                detr_loss
+                + (id_loss if id_loss is not None else 0) * id_criterion.weight
+                + (con_loss if con_loss is not None else 0) * contrastive_criterion.weight
+            )
             # Logging losses:
             metrics.update(name="loss", value=loss.item())
             metrics.update(name="detr_loss", value=detr_loss.item())
             if id_loss is not None:
                 metrics.update(name="id_loss", value=id_loss.item())
+            if con_log is not None:
+                metrics.update(name="con_loss",        value=con_log["loss"])
+                metrics.update(name="con_n_anchors",   value=con_log["n_anchors"])
+                metrics.update(name="con_n_positives", value=con_log["n_positives"])
+                metrics.update(name="con_pos_sim",     value=con_log["mean_pos_sim"])
+                metrics.update(name="con_warmup",      value=con_log["warmup_scale"])
             for k, v in detr_loss_dict.items():
                 metrics.update(name=k, value=v.item())
             loss /= accumulate_steps
