@@ -1,0 +1,64 @@
+{
+  "config": {
+    "checkpoint": "ch/checkpoint_2.pth",
+    "sequence": "dancetrack0004",
+    "id_thresh": 0.2,
+    "n_frames": 300,
+    "protocol": "hungarian"
+  },
+  "correct_assignment_scores": {
+    "mean": 0.9630821852198926,
+    "std": 0.10596574207284515,
+    "p25": 0.9923672080039978,
+    "p50": 0.9993823766708374,
+    "p75": 0.9999201893806458,
+    "n": 1155
+  },
+  "case_A_scores": {
+    "mean": null,
+    "std": null,
+    "p25": null,
+    "p50": null,
+    "p75": null,
+    "n": 0,
+    "description": "newborn, best_trajectory_score < id_thresh"
+  },
+  "case_B_scores": {
+    "mean": 0.6866046243480274,
+    "std": 0.21394160247661537,
+    "p25": 0.5036652088165283,
+    "p50": 0.6274248957633972,
+    "p75": 0.9021960347890854,
+    "n": 28,
+    "description": "newborn despite best_trajectory_score >= id_thresh"
+  },
+  "case_C_count": {
+    "n": 0,
+    "description": "newborn, correct label absent from trajectory memory"
+  },
+  "max_scores_all": {
+    "mean": 0.9533480478011496,
+    "std": 0.11853575555004642,
+    "p25": 0.9889900237321854,
+    "p50": 0.9992308020591736,
+    "p75": 0.9999114871025085,
+    "n": 1230
+  },
+  "newborn_max_scores": {
+    "mean": 0.6866046243480274,
+    "std": 0.21394160247661537,
+    "p25": 0.5036652088165283,
+    "p50": 0.6274248957633972,
+    "p75": 0.9021960347890854,
+    "n": 28
+  },
+  "newborn_breakdown": {
+    "total": 28,
+    "case_A": 0,
+    "case_B": 28,
+    "case_C": 0,
+    "case_A_pct": 0.0,
+    "case_B_pct": 100.0,
+    "case_C_pct": 0.0
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "checkpoint_args": {
+    "aux_loss": true,
+    "two_stage": true,
+    "dec_layers": 3,
+    "cls_loss_coef": 1.0,
+    "bbox_loss_coef": 5,
+    "giou_loss_coef": 2,
+    "hidden_dim": 256,
+    "num_queries": 300,
+    "sum_group_losses": false,
+    "returned_from": "ENCODER (two_stage=True overrides aux loop)",
+    "indices_space": "encoder top-K proposals \u2014 DIFFERENT index space from hs[-1]",
+    "total_det_loss": 24.0,
+    "det_id_ratio": 24.0,
+    "n_det_loss_terms": 3,
+    "has_model_key": true
+  },
+  "frame_results": [],
+  "aggregate": {},
+  "decision": {
+    "stale_indices": {
+      "verdict": "CRITICAL \u2014 two_stage=True: indices are from ENCODER (different index space from hs[-1]); prepare_for_motip receives embeddings unrelated to matched objects",
+      "severity": "CRITICAL"
+    },
+    "gradient_imbalance": {
+      "verdict": "CRITICAL \u2014 24.0:1 detection:ID ratio; ID loss cannot overcome detection gradient; fix: freeze detector OR reduce det loss weight OR increase ID loss weight by >3\u00d7",
+      "det_id_ratio": 24.0,
+      "n_det_terms": 3
+    },
+    "missing_weights": {
+      "verdict": "OK \u2014 ckpt['model'] present (weights are filtered and loaded)",
+      "severity": "NONE"
+    },
+    "combined_verdict": "CRITICAL BUG CONFIRMED \u2014 fix stale-indices bug before diagnosing embedding quality; current MOTIP training is invalid"
+  }
+}

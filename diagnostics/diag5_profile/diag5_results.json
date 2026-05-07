@@ -1,0 +1,35 @@
+{
+  "preprocess": {
+    "mean_ms": 28.32,
+    "std_ms": 2.22,
+    "pct_of_total": 63.8
+  },
+  "detr": {
+    "mean_ms": 16.08,
+    "std_ms": 0.84,
+    "pct_of_total": 36.2
+  },
+  "trajectory_modeling": {
+    "mean_ms": 0.0,
+    "std_ms": 0.0,
+    "pct_of_total": 0.0
+  },
+  "id_decoder": {
+    "mean_ms": 0.0,
+    "std_ms": 0.0,
+    "pct_of_total": 0.0
+  },
+  "assignment": {
+    "mean_ms": 0.0,
+    "std_ms": 0.0,
+    "pct_of_total": 0.0
+  },
+  "total": {
+    "mean_ms": 44.4,
+    "std_ms": 2.78,
+    "pct_of_total": 100.0
+  },
+  "fps": 22.52,
+  "dtype": "FP16",
+  "n_frames_timed": 200
+}

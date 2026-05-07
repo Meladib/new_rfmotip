@@ -1,0 +1,27 @@
+{
+  "original": {
+    "label": "original",
+    "mean_load_ms": 4.27,
+    "mean_gpu_ms": 37.85,
+    "mean_total_ms": 42.12,
+    "fps": 23.74,
+    "n_frames": 200,
+    "load_pct": 10.1,
+    "gpu_pct": 89.9
+  },
+  "preloaded": {
+    "label": "preloaded",
+    "mean_load_ms": 4.16,
+    "mean_gpu_ms": 28.81,
+    "mean_total_ms": 32.97,
+    "fps": 30.33,
+    "n_frames": 200,
+    "load_pct": 12.6,
+    "gpu_pct": 87.4
+  },
+  "speedup": 1.278,
+  "fps_gain": 6.59,
+  "sequence": "dancetrack0041",
+  "dtype": "FP16",
+  "num_frames": 200
+}
