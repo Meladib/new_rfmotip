@@ -12,6 +12,7 @@ class MOTIP(nn.Module):
             only_detr: bool,
             trajectory_modeling: nn.Module,
             id_decoder: nn.Module,
+            reid_proj: nn.Module = None,        # NEW
     ):
         super().__init__()
         self.detr = detr
@@ -19,12 +20,11 @@ class MOTIP(nn.Module):
         self.only_detr = only_detr
         self.trajectory_modeling = trajectory_modeling
         self.id_decoder = id_decoder
-
+        self.reid_proj = reid_proj              # NEW
         if self.id_decoder is not None:
             self.num_id_vocabulary = self.id_decoder.num_id_vocabulary
         else:
-            self.num_id_vocabulary = 1000           # hack implementation
-
+            self.num_id_vocabulary = 1000
         return
 
     def forward(self, **kwargs):
@@ -33,12 +33,15 @@ class MOTIP(nn.Module):
             case "detr":
                 frames = kwargs["frames"]
                 if "use_checkpoint" in kwargs:
-                    return checkpoint(
+                    out = checkpoint(
                         self.detr, frames,
                         use_reentrant=False,
                     )
                 else:
-                    return self.detr(samples=frames)
+                    out = self.detr(samples=frames)
+                if self.reid_proj is not None:
+                    out["outputs"] = self.reid_proj(out["outputs"].detach())
+                return out
             case "trajectory_modeling":
                 seq_info = kwargs["seq_info"]
                 return self.trajectory_modeling(seq_info)
