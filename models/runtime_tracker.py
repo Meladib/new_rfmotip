@@ -27,6 +27,7 @@ class RuntimeTracker:
             area_thresh: int = 0,
             only_detr: bool = False,
             dtype: torch.dtype = torch.float32,
+            temperature: float = 1.0,
     ):
         self.model = model
         self.model.eval()
@@ -48,6 +49,7 @@ class RuntimeTracker:
         self.id_thresh = id_thresh
         self.area_thresh = area_thresh
         self.only_detr = only_detr
+        self.temperature = temperature
         self.num_id_vocabulary = get_model(model).num_id_vocabulary
 
         # Check for the legality of settings:
@@ -210,6 +212,8 @@ class RuntimeTracker:
                 id_scores = id_logits.softmax(dim=-1)
             else:
                 id_scores = id_logits.sigmoid()
+            if self.temperature != 1.0:
+                id_scores = (id_scores.clamp(min=1e-9).log() / self.temperature).softmax(dim=-1)
             # 5. assign id labels:
             # Different assignment protocols:
             match self.assignment_protocol:
