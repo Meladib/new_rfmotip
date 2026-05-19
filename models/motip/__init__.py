@@ -101,6 +101,23 @@ def build(config: dict):
         use_aux_loss=config["USE_AUX_LOSS"],
         use_shared_aux_head=config["USE_SHARED_AUX_HEAD"],
     ) if config["ONLY_DETR"] is False else None
+    # Build re-ID projection head if enabled:
+    _reid_proj = None
+    if config.get("USE_REID_PROJ", False):
+        import torch.nn as _nn
+        _linear = _nn.Linear(
+            config.get("FEATURE_DIM", 256),
+            config.get("FEATURE_DIM", 256),
+            bias=False,
+        )
+        _nn.init.eye_(_linear.weight)   # identity init — no-op at start
+        _reid_proj = _nn.Sequential(
+            _linear,
+            _nn.LayerNorm(config.get("FEATURE_DIM", 256)),
+        )
+        print("[build] Re-ID projection head enabled "
+              f"({config.get('FEATURE_DIM', 256)}→{config.get('FEATURE_DIM', 256)}, "
+              "identity init).")
 
     # Construct MOTIP model:
     motip_model = MOTIP(
@@ -109,6 +126,7 @@ def build(config: dict):
         only_detr=config["ONLY_DETR"],
         trajectory_modeling=_trajectory_modeling,
         id_decoder=_id_decoder,
+        reid_proj=_reid_proj,
     )
 
     return motip_model, detr_criterion
