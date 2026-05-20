@@ -1,0 +1,46 @@
+{
+  "n_embeddings": 79141,
+  "n_unique_ids": 419,
+  "n_train_sequences": 40,
+  "baseline_raw": {
+    "intra_mean": 0.7521367822537046,
+    "intra_std": 0.20614148399923535,
+    "inter_mean": 0.7078444380624221,
+    "inter_std": 0.19812955188719866,
+    "gap": 0.04429234419128247,
+    "n_intra": 41666,
+    "n_inter": 2994
+  },
+  "baseline_l2norm": {
+    "intra_mean": 0.7521368105479868,
+    "intra_std": 0.206141489745714,
+    "inter_mean": 0.7078444650129191,
+    "inter_std": 0.19812955786251513,
+    "gap": 0.04429234553506767,
+    "n_intra": 41666,
+    "n_inter": 2994
+  },
+  "lda_projection": {
+    "intra_mean": 0.2203415739743744,
+    "intra_std": 0.3456701762635016,
+    "inter_mean": 0.021656552742435182,
+    "inter_std": 0.30051240890564895,
+    "gap": 0.1986850212319392,
+    "n_intra": 41666,
+    "n_inter": 2994
+  },
+  "random_linear": {
+    "intra_mean": 0.7502525419166285,
+    "intra_std": 0.18665668330406832,
+    "inter_mean": 0.7023123247609906,
+    "inter_std": 0.17754588011301675,
+    "gap": 0.0479402171556379,
+    "n_intra": 41666,
+    "n_inter": 2994
+  },
+  "improvement_ratio": 4.4858,
+  "verdict": "PASS",
+  "conclusion": "Linear projection improves separability by 4.5\u00d7. The frozen feature space IS linearly separable by identity. Re-ID projection head (V4c) is CONFIRMED \u2014 a trained linear layer can learn a meaningful re-ID mapping from these features.",
+  "pass_threshold": 2.0,
+  "marginal_threshold": 1.5
+}

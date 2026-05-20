@@ -1,0 +1,87 @@
+{
+  "current_weight": 0.05,
+  "target_ratio": 0.1,
+  "n_steps_parsed": 6096,
+  "mean_ratio_all": 0.64564,
+  "mean_ratio_post_warmup": 0.64862,
+  "max_ratio": 0.99758,
+  "max_con_pos_sim": 0.892,
+  "final_con_pos_sim": 0.6892,
+  "suggested_weight": 0.008,
+  "verdict": "FAIL \u2014 already converged",
+  "conclusion": "con_pos_sim reached 0.892 > 0.75. The contrastive loss DID converge. Non-convergence diagnosis was incorrect or the log showed partial training. Increasing weight is NOT the fix. Investigate temperature (CONTRASTIVE_TEMP) or positive pair quality instead.",
+  "per_epoch": {
+    "0": {
+      "mean_id_loss": 1.2818548679351807,
+      "mean_con_loss": 7.3912882804870605,
+      "mean_ratio": 0.35244977474212646,
+      "mean_pos_sim": 0.709672212600708
+    },
+    "1": {
+      "mean_id_loss": 0.7425200939178467,
+      "mean_con_loss": 7.48210334777832,
+      "mean_ratio": 0.5055952072143555,
+      "mean_pos_sim": 0.6766780018806458
+    },
+    "2": {
+      "mean_id_loss": 0.6658591628074646,
+      "mean_con_loss": 7.471324920654297,
+      "mean_ratio": 0.562549889087677,
+      "mean_pos_sim": 0.6679102182388306
+    },
+    "3": {
+      "mean_id_loss": 0.621904730796814,
+      "mean_con_loss": 7.4709367752075195,
+      "mean_ratio": 0.6026197671890259,
+      "mean_pos_sim": 0.661431074142456
+    },
+    "4": {
+      "mean_id_loss": 0.5871673226356506,
+      "mean_con_loss": 7.4640655517578125,
+      "mean_ratio": 0.6373465061187744,
+      "mean_pos_sim": 0.6572222113609314
+    },
+    "5": {
+      "mean_id_loss": 0.5665214657783508,
+      "mean_con_loss": 7.461951732635498,
+      "mean_ratio": 0.6600677967071533,
+      "mean_pos_sim": 0.6552854776382446
+    },
+    "6": {
+      "mean_id_loss": 0.5200175046920776,
+      "mean_con_loss": 7.45555305480957,
+      "mean_ratio": 0.7188717126846313,
+      "mean_pos_sim": 0.6498964428901672
+    },
+    "7": {
+      "mean_id_loss": 0.5111558437347412,
+      "mean_con_loss": 7.453786373138428,
+      "mean_ratio": 0.7309143543243408,
+      "mean_pos_sim": 0.6473190784454346
+    },
+    "8": {
+      "mean_id_loss": 0.5077999830245972,
+      "mean_con_loss": 7.419317245483398,
+      "mean_ratio": 0.7291329503059387,
+      "mean_pos_sim": 0.7242686748504639
+    },
+    "9": {
+      "mean_id_loss": 0.5047191381454468,
+      "mean_con_loss": 7.517056941986084,
+      "mean_ratio": 0.746384859085083,
+      "mean_pos_sim": 0.6966025233268738
+    },
+    "10": {
+      "mean_id_loss": 0.5016665458679199,
+      "mean_con_loss": 7.513746738433838,
+      "mean_ratio": 0.7505801916122437,
+      "mean_pos_sim": 0.6937586665153503
+    },
+    "11": {
+      "mean_id_loss": 0.501287043094635,
+      "mean_con_loss": 7.511279582977295,
+      "mean_ratio": 0.7511746287345886,
+      "mean_pos_sim": 0.6916161775588989
+    }
+  }
+}

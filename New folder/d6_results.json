@@ -1,0 +1,408 @@
+{
+  "n_train_seqs": 40,
+  "n_val_seqs": 25,
+  "n_windows": 40636,
+  "window_mean": 8.584260261836794,
+  "window_p90": 13.0,
+  "window_p95": 17.0,
+  "windows_above_10_pct": 21.549857269416282,
+  "windows_above_15_pct": 7.316172851658628,
+  "windows_above_20_pct": 4.811005020179151,
+  "train_max_mean": 10.45,
+  "val_max_mean": 10.72,
+  "hypothesis_C_strength": "moderate",
+  "per_train_seq": [
+    {
+      "mean_concurrent": 6.987197724039829,
+      "max_concurrent": 7,
+      "n_frames": 703,
+      "sequence": "dancetrack0001"
+    },
+    {
+      "mean_concurrent": 7.694929343308396,
+      "max_concurrent": 8,
+      "n_frames": 1203,
+      "sequence": "dancetrack0002"
+    },
+    {
+      "mean_concurrent": 8.784525790349418,
+      "max_concurrent": 9,
+      "n_frames": 1202,
+      "sequence": "dancetrack0006"
+    },
+    {
+      "mean_concurrent": 7.757644394110986,
+      "max_concurrent": 8,
+      "n_frames": 883,
+      "sequence": "dancetrack0008"
+    },
+    {
+      "mean_concurrent": 10.83291770573566,
+      "max_concurrent": 12,
+      "n_frames": 1203,
+      "sequence": "dancetrack0012"
+    },
+    {
+      "mean_concurrent": 8.911055694098089,
+      "max_concurrent": 9,
+      "n_frames": 1203,
+      "sequence": "dancetrack0015"
+    },
+    {
+      "mean_concurrent": 5.831252889505317,
+      "max_concurrent": 6,
+      "n_frames": 2163,
+      "sequence": "dancetrack0016"
+    },
+    {
+      "mean_concurrent": 34.60377358490566,
+      "max_concurrent": 40,
+      "n_frames": 583,
+      "sequence": "dancetrack0020"
+    },
+    {
+      "mean_concurrent": 8.78287255563048,
+      "max_concurrent": 9,
+      "n_frames": 1483,
+      "sequence": "dancetrack0023"
+    },
+    {
+      "mean_concurrent": 5.913499344692005,
+      "max_concurrent": 6,
+      "n_frames": 763,
+      "sequence": "dancetrack0024"
+    },
+    {
+      "mean_concurrent": 8.548387096774194,
+      "max_concurrent": 12,
+      "n_frames": 403,
+      "sequence": "dancetrack0027"
+    },
+    {
+      "mean_concurrent": 6.243863816310372,
+      "max_concurrent": 7,
+      "n_frames": 1263,
+      "sequence": "dancetrack0029"
+    },
+    {
+      "mean_concurrent": 5.562913907284768,
+      "max_concurrent": 6,
+      "n_frames": 604,
+      "sequence": "dancetrack0032"
+    },
+    {
+      "mean_concurrent": 7.767123287671233,
+      "max_concurrent": 8,
+      "n_frames": 803,
+      "sequence": "dancetrack0033"
+    },
+    {
+      "mean_concurrent": 6.903574397339983,
+      "max_concurrent": 7,
+      "n_frames": 1203,
+      "sequence": "dancetrack0037"
+    },
+    {
+      "mean_concurrent": 4.904991948470209,
+      "max_concurrent": 5,
+      "n_frames": 1242,
+      "sequence": "dancetrack0039"
+    },
+    {
+      "mean_concurrent": 11.129675810473815,
+      "max_concurrent": 13,
+      "n_frames": 1203,
+      "sequence": "dancetrack0044"
+    },
+    {
+      "mean_concurrent": 13.15876974231089,
+      "max_concurrent": 14,
+      "n_frames": 1203,
+      "sequence": "dancetrack0045"
+    },
+    {
+      "mean_concurrent": 7.898586866167913,
+      "max_concurrent": 8,
+      "n_frames": 1203,
+      "sequence": "dancetrack0049"
+    },
+    {
+      "mean_concurrent": 8.984206151288445,
+      "max_concurrent": 9,
+      "n_frames": 1203,
+      "sequence": "dancetrack0051"
+    },
+    {
+      "mean_concurrent": 3.70906068162926,
+      "max_concurrent": 4,
+      "n_frames": 1203,
+      "sequence": "dancetrack0052"
+    },
+    {
+      "mean_concurrent": 4.945182724252492,
+      "max_concurrent": 5,
+      "n_frames": 1204,
+      "sequence": "dancetrack0053"
+    },
+    {
+      "mean_concurrent": 4.837905236907731,
+      "max_concurrent": 5,
+      "n_frames": 1203,
+      "sequence": "dancetrack0055"
+    },
+    {
+      "mean_concurrent": 4.829581993569132,
+      "max_concurrent": 6,
+      "n_frames": 622,
+      "sequence": "dancetrack0057"
+    },
+    {
+      "mean_concurrent": 5.0,
+      "max_concurrent": 5,
+      "n_frames": 1203,
+      "sequence": "dancetrack0061"
+    },
+    {
+      "mean_concurrent": 5.176226101413134,
+      "max_concurrent": 6,
+      "n_frames": 1203,
+      "sequence": "dancetrack0062"
+    },
+    {
+      "mean_concurrent": 5.0,
+      "max_concurrent": 5,
+      "n_frames": 1202,
+      "sequence": "dancetrack0066"
+    },
+    {
+      "mean_concurrent": 4.989193682460515,
+      "max_concurrent": 5,
+      "n_frames": 1203,
+      "sequence": "dancetrack0068"
+    },
+    {
+      "mean_concurrent": 5.886671418389166,
+      "max_concurrent": 6,
+      "n_frames": 1403,
+      "sequence": "dancetrack0069"
+    },
+    {
+      "mean_concurrent": 4.908561928512054,
+      "max_concurrent": 5,
+      "n_frames": 1203,
+      "sequence": "dancetrack0072"
+    },
+    {
+      "mean_concurrent": 4.4089775561097255,
+      "max_concurrent": 5,
+      "n_frames": 1203,
+      "sequence": "dancetrack0074"
+    },
+    {
+      "mean_concurrent": 6.77708592777086,
+      "max_concurrent": 7,
+      "n_frames": 803,
+      "sequence": "dancetrack0075"
+    },
+    {
+      "mean_concurrent": 10.024979184013322,
+      "max_concurrent": 16,
+      "n_frames": 1201,
+      "sequence": "dancetrack0080"
+    },
+    {
+      "mean_concurrent": 20.514096185737976,
+      "max_concurrent": 24,
+      "n_frames": 603,
+      "sequence": "dancetrack0082"
+    },
+    {
+      "mean_concurrent": 24.865671641791046,
+      "max_concurrent": 25,
+      "n_frames": 603,
+      "sequence": "dancetrack0083"
+    },
+    {
+      "mean_concurrent": 15.747927031509121,
+      "max_concurrent": 16,
+      "n_frames": 603,
+      "sequence": "dancetrack0086"
+    },
+    {
+      "mean_concurrent": 10.666999002991027,
+      "max_concurrent": 11,
+      "n_frames": 1003,
+      "sequence": "dancetrack0087"
+    },
+    {
+      "mean_concurrent": 26.180762852404644,
+      "max_concurrent": 40,
+      "n_frames": 603,
+      "sequence": "dancetrack0096"
+    },
+    {
+      "mean_concurrent": 7.004156275976725,
+      "max_concurrent": 8,
+      "n_frames": 1203,
+      "sequence": "dancetrack0098"
+    },
+    {
+      "mean_concurrent": 10.291873963515755,
+      "max_concurrent": 11,
+      "n_frames": 603,
+      "sequence": "dancetrack0099"
+    }
+  ],
+  "per_val_seq": [
+    {
+      "mean_concurrent": 3.8121363258520367,
+      "max_concurrent": 4,
+      "n_frames": 1203,
+      "sequence": "dancetrack0004"
+    },
+    {
+      "mean_concurrent": 3.939318370739817,
+      "max_concurrent": 4,
+      "n_frames": 1203,
+      "sequence": "dancetrack0005"
+    },
+    {
+      "mean_concurrent": 7.872817955112219,
+      "max_concurrent": 8,
+      "n_frames": 1203,
+      "sequence": "dancetrack0007"
+    },
+    {
+      "mean_concurrent": 5.842892768079801,
+      "max_concurrent": 6,
+      "n_frames": 1203,
+      "sequence": "dancetrack0010"
+    },
+    {
+      "mean_concurrent": 10.519534497090607,
+      "max_concurrent": 12,
+      "n_frames": 1203,
+      "sequence": "dancetrack0014"
+    },
+    {
+      "mean_concurrent": 5.834990059642147,
+      "max_concurrent": 8,
+      "n_frames": 503,
+      "sequence": "dancetrack0018"
+    },
+    {
+      "mean_concurrent": 6.870940882597835,
+      "max_concurrent": 7,
+      "n_frames": 2402,
+      "sequence": "dancetrack0019"
+    },
+    {
+      "mean_concurrent": 8.81569115815691,
+      "max_concurrent": 9,
+      "n_frames": 803,
+      "sequence": "dancetrack0025"
+    },
+    {
+      "mean_concurrent": 13.221854304635762,
+      "max_concurrent": 18,
+      "n_frames": 302,
+      "sequence": "dancetrack0026"
+    },
+    {
+      "mean_concurrent": 5.995249406175772,
+      "max_concurrent": 6,
+      "n_frames": 1263,
+      "sequence": "dancetrack0030"
+    },
+    {
+      "mean_concurrent": 12.071505958829903,
+      "max_concurrent": 14,
+      "n_frames": 923,
+      "sequence": "dancetrack0034"
+    },
+    {
+      "mean_concurrent": 7.486486486486487,
+      "max_concurrent": 8,
+      "n_frames": 703,
+      "sequence": "dancetrack0035"
+    },
+    {
+      "mean_concurrent": 16.687936191425724,
+      "max_concurrent": 22,
+      "n_frames": 1003,
+      "sequence": "dancetrack0041"
+    },
+    {
+      "mean_concurrent": 9.153005464480874,
+      "max_concurrent": 12,
+      "n_frames": 183,
+      "sequence": "dancetrack0043"
+    },
+    {
+      "mean_concurrent": 7.822111388196176,
+      "max_concurrent": 8,
+      "n_frames": 1203,
+      "sequence": "dancetrack0047"
+    },
+    {
+      "mean_concurrent": 6.901936289818863,
+      "max_concurrent": 7,
+      "n_frames": 1601,
+      "sequence": "dancetrack0058"
+    },
+    {
+      "mean_concurrent": 7.614,
+      "max_concurrent": 8,
+      "n_frames": 1000,
+      "sequence": "dancetrack0063"
+    },
+    {
+      "mean_concurrent": 4.992877492877493,
+      "max_concurrent": 5,
+      "n_frames": 702,
+      "sequence": "dancetrack0065"
+    },
+    {
+      "mean_concurrent": 12.048364153627311,
+      "max_concurrent": 14,
+      "n_frames": 703,
+      "sequence": "dancetrack0073"
+    },
+    {
+      "mean_concurrent": 9.0,
+      "max_concurrent": 9,
+      "n_frames": 1203,
+      "sequence": "dancetrack0077"
+    },
+    {
+      "mean_concurrent": 12.082362728785357,
+      "max_concurrent": 18,
+      "n_frames": 1202,
+      "sequence": "dancetrack0079"
+    },
+    {
+      "mean_concurrent": 19.114837398373982,
+      "max_concurrent": 20,
+      "n_frames": 984,
+      "sequence": "dancetrack0081"
+    },
+    {
+      "mean_concurrent": 13.089641434262948,
+      "max_concurrent": 14,
+      "n_frames": 1004,
+      "sequence": "dancetrack0090"
+    },
+    {
+      "mean_concurrent": 19.48424543946932,
+      "max_concurrent": 23,
+      "n_frames": 603,
+      "sequence": "dancetrack0094"
+    },
+    {
+      "mean_concurrent": 3.880299251870324,
+      "max_concurrent": 4,
+      "n_frames": 1203,
+      "sequence": "dancetrack0097"
+    }
+  ]
+}

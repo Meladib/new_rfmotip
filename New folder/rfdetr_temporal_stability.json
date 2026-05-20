@@ -1,0 +1,1347 @@
+{
+  "checkpoint": "rfdetr_dancetrack_motip/checkpoint_best_total.pth",
+  "split": "val",
+  "iou_threshold": 0.5,
+  "global_summary": {
+    "diag_A_slot_level_sim": 0.6334,
+    "diag_B_object_matched": {
+      "gap_1": 0.8759,
+      "gap_5": 0.8172,
+      "gap_10": 0.7944,
+      "gap_20": 0.7732
+    },
+    "diag_C_object_slots_per_frame": 9.35,
+    "diag_C_background_fraction": 0.9688,
+    "diag_D_intra_sim": 0.8742,
+    "diag_D_inter_sim": 0.709,
+    "diag_D_separability_gap": 0.1652,
+    "diag_E_norm_cv_mean": 0.0645
+  },
+  "per_sequence": [
+    {
+      "sequence": "dancetrack0004",
+      "diag_A": {
+        "mean": 0.6091656838655471,
+        "std": 0.023539815248174813,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8674897147511003,
+          "std": 0.2040516050049891,
+          "n_pairs": 4556
+        },
+        "gap_5": {
+          "mean": 0.8050833791319629,
+          "std": 0.21477588414746285,
+          "n_pairs": 4477
+        },
+        "gap_10": {
+          "mean": 0.7757063314713636,
+          "std": 0.2186821755141183,
+          "n_pairs": 4414
+        },
+        "gap_20": {
+          "mean": 0.7479178593959659,
+          "std": 0.2217422408255308,
+          "n_pairs": 4360
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 3.8113050706566916,
+        "std_matched_slots": 0.5286207928902038,
+        "mean_background_fraction": 0.9872956497644777,
+        "mean_object_fraction": 0.012704350235522306,
+        "max_matched_in_frame": 4
+      },
+      "diag_D": {
+        "intra_mean": 0.8460168449077636,
+        "intra_std": 0.20077877906581182,
+        "inter_mean": 0.664001463218548,
+        "inter_std": 0.22329977221459024,
+        "separability_gap": 0.1820153816892156,
+        "n_intra": 785,
+        "n_inter": 1161
+      },
+      "diag_E": {
+        "global_norm_mean": 13.978873382867878,
+        "global_norm_std": 1.010117909578042,
+        "per_object_cv_mean": 0.0715838327837257,
+        "per_object_cv_std": 0.00840624733019239,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0005",
+      "diag_A": {
+        "mean": 0.6309473618268967,
+        "std": 0.02632475842132235,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.9109366956392608,
+          "std": 0.18101933017074398,
+          "n_pairs": 4725
+        },
+        "gap_5": {
+          "mean": 0.8558190588349851,
+          "std": 0.19119067125365116,
+          "n_pairs": 4688
+        },
+        "gap_10": {
+          "mean": 0.8314388701106272,
+          "std": 0.19725101657665559,
+          "n_pairs": 4657
+        },
+        "gap_20": {
+          "mean": 0.8080694090811801,
+          "std": 0.20400325019514773,
+          "n_pairs": 4609
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 3.939318370739817,
+        "std_matched_slots": 0.23874540651185852,
+        "mean_background_fraction": 0.9868689387642006,
+        "mean_object_fraction": 0.01313106123579939,
+        "max_matched_in_frame": 4
+      },
+      "diag_D": {
+        "intra_mean": 0.925551161408387,
+        "intra_std": 0.16176617238763544,
+        "inter_mean": 0.7902990360310306,
+        "inter_std": 0.19013503928392608,
+        "separability_gap": 0.13525212537735642,
+        "n_intra": 797,
+        "n_inter": 1191
+      },
+      "diag_E": {
+        "global_norm_mean": 14.371492230306071,
+        "global_norm_std": 0.8479994667550946,
+        "per_object_cv_mean": 0.057318697153633656,
+        "per_object_cv_std": 0.00858836203204,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0007",
+      "diag_A": {
+        "mean": 0.6365887149572372,
+        "std": 0.01987035335270155,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.9099006687137061,
+          "std": 0.18329739546010482,
+          "n_pairs": 9440
+        },
+        "gap_5": {
+          "mean": 0.8577674046735101,
+          "std": 0.19867294246931352,
+          "n_pairs": 9368
+        },
+        "gap_10": {
+          "mean": 0.8331065064840966,
+          "std": 0.20661607101464843,
+          "n_pairs": 9304
+        },
+        "gap_20": {
+          "mean": 0.8086015751001223,
+          "std": 0.2102938112472611,
+          "n_pairs": 9193
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 7.872817955112219,
+        "std_matched_slots": 0.34542629358430843,
+        "mean_background_fraction": 0.9737572734829593,
+        "mean_object_fraction": 0.026242726517040734,
+        "max_matched_in_frame": 8
+      },
+      "diag_D": {
+        "intra_mean": 0.9033588821543107,
+        "intra_std": 0.18703678126049983,
+        "inter_mean": 0.7235742480021585,
+        "inter_std": 0.22928325048792192,
+        "separability_gap": 0.17978463415215218,
+        "n_intra": 1597,
+        "n_inter": 5586
+      },
+      "diag_E": {
+        "global_norm_mean": 14.131218188139519,
+        "global_norm_std": 0.8799695716040684,
+        "per_object_cv_mean": 0.06104472819412232,
+        "per_object_cv_std": 0.006830648938412076,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0010",
+      "diag_A": {
+        "mean": 0.6633687151670455,
+        "std": 0.020708937877561354,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.9177943197219718,
+          "std": 0.17375755984543778,
+          "n_pairs": 7009
+        },
+        "gap_5": {
+          "mean": 0.8609332117515831,
+          "std": 0.18713991401537686,
+          "n_pairs": 6959
+        },
+        "gap_10": {
+          "mean": 0.8377275367416183,
+          "std": 0.18999273456327212,
+          "n_pairs": 6912
+        },
+        "gap_20": {
+          "mean": 0.8202336208142605,
+          "std": 0.1959319428296921,
+          "n_pairs": 6844
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 5.842892768079801,
+        "std_matched_slots": 0.3661789999293543,
+        "mean_background_fraction": 0.9805236907730673,
+        "mean_object_fraction": 0.019476309226932668,
+        "max_matched_in_frame": 6
+      },
+      "diag_D": {
+        "intra_mean": 0.9017122246076663,
+        "intra_std": 0.18835852473732675,
+        "inter_mean": 0.7557509895314773,
+        "inter_std": 0.23590760777768455,
+        "separability_gap": 0.14596123507618897,
+        "n_intra": 1200,
+        "n_inter": 3000
+      },
+      "diag_E": {
+        "global_norm_mean": 14.436637305046556,
+        "global_norm_std": 0.8520403842593411,
+        "per_object_cv_mean": 0.057273224748423036,
+        "per_object_cv_std": 0.010840757628009371,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0014",
+      "diag_A": {
+        "mean": 0.6712016253471375,
+        "std": 0.02043591436109851,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8769711370584214,
+          "std": 0.1722247074792655,
+          "n_pairs": 12514
+        },
+        "gap_5": {
+          "mean": 0.8126172501190257,
+          "std": 0.1831431080727217,
+          "n_pairs": 12157
+        },
+        "gap_10": {
+          "mean": 0.789861121659293,
+          "std": 0.18355331216270943,
+          "n_pairs": 11896
+        },
+        "gap_20": {
+          "mean": 0.7727924675403162,
+          "std": 0.1834851311938603,
+          "n_pairs": 11510
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 10.518703241895262,
+        "std_matched_slots": 1.6861691487567065,
+        "mean_background_fraction": 0.9649376558603491,
+        "mean_object_fraction": 0.03506234413965087,
+        "max_matched_in_frame": 12
+      },
+      "diag_D": {
+        "intra_mean": 0.8528208632690508,
+        "intra_std": 0.1822455218251725,
+        "inter_mean": 0.6843729572297409,
+        "inter_std": 0.19351626691122414,
+        "separability_gap": 0.16844790603930992,
+        "n_intra": 2079,
+        "n_inter": 10351
+      },
+      "diag_E": {
+        "global_norm_mean": 13.466530192194154,
+        "global_norm_std": 0.9199293186709895,
+        "per_object_cv_mean": 0.06657836022189195,
+        "per_object_cv_std": 0.005267388967810144,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0018",
+      "diag_A": {
+        "mean": 0.6711014827489853,
+        "std": 0.01630199421702986,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.9234595425244174,
+          "std": 0.1472878353269269,
+          "n_pairs": 2731
+        },
+        "gap_5": {
+          "mean": 0.8817297473505095,
+          "std": 0.1575088877068687,
+          "n_pairs": 2664
+        },
+        "gap_10": {
+          "mean": 0.8657740343044589,
+          "std": 0.1566963419985325,
+          "n_pairs": 2593
+        },
+        "gap_20": {
+          "mean": 0.8566202435943737,
+          "std": 0.1612125709177732,
+          "n_pairs": 2535
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 5.58648111332008,
+        "std_matched_slots": 0.655286002195312,
+        "mean_background_fraction": 0.9813783962889331,
+        "mean_object_fraction": 0.018621603711066928,
+        "max_matched_in_frame": 8
+      },
+      "diag_D": {
+        "intra_mean": 0.9250625199985685,
+        "intra_std": 0.14167129153488564,
+        "inter_mean": 0.7085862093610513,
+        "inter_std": 0.2894771955691978,
+        "separability_gap": 0.21647631063751716,
+        "n_intra": 1059,
+        "n_inter": 2409
+      },
+      "diag_E": {
+        "global_norm_mean": 14.340660402359063,
+        "global_norm_std": 0.9921611908297033,
+        "per_object_cv_mean": 0.03678577821376472,
+        "per_object_cv_std": 0.014196501842280001,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0019",
+      "diag_A": {
+        "mean": 0.6292586089372635,
+        "std": 0.03748484516984821,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.878679769287066,
+          "std": 0.20659779069883988,
+          "n_pairs": 16456
+        },
+        "gap_5": {
+          "mean": 0.8119200261825719,
+          "std": 0.222217479009382,
+          "n_pairs": 16335
+        },
+        "gap_10": {
+          "mean": 0.787527359161711,
+          "std": 0.22350290983114954,
+          "n_pairs": 16247
+        },
+        "gap_20": {
+          "mean": 0.7634517568688342,
+          "std": 0.22834501817239228,
+          "n_pairs": 16127
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 6.8701082431307245,
+        "std_matched_slots": 0.38034219870650265,
+        "mean_background_fraction": 0.9770996391895642,
+        "mean_object_fraction": 0.02290036081043575,
+        "max_matched_in_frame": 7
+      },
+      "diag_D": {
+        "intra_mean": 0.8789174761330443,
+        "intra_std": 0.2098392140622152,
+        "inter_mean": 0.7501079070439474,
+        "inter_std": 0.25072025308730156,
+        "separability_gap": 0.1288095690890969,
+        "n_intra": 1400,
+        "n_inter": 4200
+      },
+      "diag_E": {
+        "global_norm_mean": 14.111163273419399,
+        "global_norm_std": 1.0266279286988422,
+        "per_object_cv_mean": 0.07202898966999005,
+        "per_object_cv_std": 0.005548000149212786,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0025",
+      "diag_A": {
+        "mean": 0.6371329643726349,
+        "std": 0.016855766886297457,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8493045269861051,
+          "std": 0.22045318317703094,
+          "n_pairs": 7042
+        },
+        "gap_5": {
+          "mean": 0.7784821420251955,
+          "std": 0.23271494966489303,
+          "n_pairs": 6962
+        },
+        "gap_10": {
+          "mean": 0.7509663856630698,
+          "std": 0.23606056025844527,
+          "n_pairs": 6898
+        },
+        "gap_20": {
+          "mean": 0.7336622027767473,
+          "std": 0.23610536496368154,
+          "n_pairs": 6793
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 8.805728518057284,
+        "std_matched_slots": 0.4374920726083944,
+        "mean_background_fraction": 0.9706475716064757,
+        "mean_object_fraction": 0.02935242839352429,
+        "max_matched_in_frame": 9
+      },
+      "diag_D": {
+        "intra_mean": 0.8316343340443428,
+        "intra_std": 0.2303495304002939,
+        "inter_mean": 0.6576852137326635,
+        "inter_std": 0.2578039258049959,
+        "separability_gap": 0.1739491203116793,
+        "n_intra": 1762,
+        "n_inter": 6912
+      },
+      "diag_E": {
+        "global_norm_mean": 13.606332830451466,
+        "global_norm_std": 1.0462976393129695,
+        "per_object_cv_mean": 0.06876705114705838,
+        "per_object_cv_std": 0.012291266751272423,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0026",
+      "diag_A": {
+        "mean": 0.6517659506924525,
+        "std": 0.02002899105296447,
+        "n_pairs": 301
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8509657590798103,
+          "std": 0.17845379118503513,
+          "n_pairs": 3805
+        },
+        "gap_5": {
+          "mean": 0.7859440116227489,
+          "std": 0.18230056051017332,
+          "n_pairs": 3437
+        },
+        "gap_10": {
+          "mean": 0.7655992708760443,
+          "std": 0.18136014895759756,
+          "n_pairs": 3267
+        },
+        "gap_20": {
+          "mean": 0.7516585319989616,
+          "std": 0.17817749547119993,
+          "n_pairs": 3045
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 13.211920529801324,
+        "std_matched_slots": 2.488674403186406,
+        "mean_background_fraction": 0.9559602649006622,
+        "mean_object_fraction": 0.04403973509933775,
+        "max_matched_in_frame": 18
+      },
+      "diag_D": {
+        "intra_mean": 0.8515351085552101,
+        "intra_std": 0.1724514384281663,
+        "inter_mean": 0.6953518986879673,
+        "inter_std": 0.18175725287961747,
+        "separability_gap": 0.15618320986724277,
+        "n_intra": 2745,
+        "n_inter": 19286
+      },
+      "diag_E": {
+        "global_norm_mean": 13.443469285845458,
+        "global_norm_std": 0.9887998474796066,
+        "per_object_cv_mean": 0.07070199698823584,
+        "per_object_cv_std": 0.007649859631730572,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0030",
+      "diag_A": {
+        "mean": 0.6010318129062653,
+        "std": 0.016282585985573264,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8570259087455534,
+          "std": 0.23054484276915238,
+          "n_pairs": 7564
+        },
+        "gap_5": {
+          "mean": 0.793892923857465,
+          "std": 0.2430829671853883,
+          "n_pairs": 7536
+        },
+        "gap_10": {
+          "mean": 0.7709037227455654,
+          "std": 0.24798670134598036,
+          "n_pairs": 7506
+        },
+        "gap_20": {
+          "mean": 0.7487778425624864,
+          "std": 0.25056024436036384,
+          "n_pairs": 7446
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 5.995249406175772,
+        "std_matched_slots": 0.06876064050418113,
+        "mean_background_fraction": 0.9800158353127474,
+        "mean_object_fraction": 0.019984164687252576,
+        "max_matched_in_frame": 6
+      },
+      "diag_D": {
+        "intra_mean": 0.864286928412815,
+        "intra_std": 0.2217478154965096,
+        "inter_mean": 0.6637498430963605,
+        "inter_std": 0.2524362184894738,
+        "separability_gap": 0.20053708531645442,
+        "n_intra": 1200,
+        "n_inter": 3000
+      },
+      "diag_E": {
+        "global_norm_mean": 13.753189109836503,
+        "global_norm_std": 0.9850871127511948,
+        "per_object_cv_mean": 0.0668309558052095,
+        "per_object_cv_std": 0.008215122001995886,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0034",
+      "diag_A": {
+        "mean": 0.655114362001419,
+        "std": 0.022212984761009663,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8803459654084934,
+          "std": 0.18178780274736558,
+          "n_pairs": 11018
+        },
+        "gap_5": {
+          "mean": 0.8245494786175627,
+          "std": 0.19174513713470093,
+          "n_pairs": 10708
+        },
+        "gap_10": {
+          "mean": 0.7998049867423516,
+          "std": 0.19344413267366398,
+          "n_pairs": 10478
+        },
+        "gap_20": {
+          "mean": 0.7739749671636527,
+          "std": 0.19785187925182043,
+          "n_pairs": 10161
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 12.059588299024918,
+        "std_matched_slots": 1.3165019161744655,
+        "mean_background_fraction": 0.9598013723365836,
+        "mean_object_fraction": 0.0401986276634164,
+        "max_matched_in_frame": 14
+      },
+      "diag_D": {
+        "intra_mean": 0.8992969062793073,
+        "intra_std": 0.17130345861464066,
+        "inter_mean": 0.7349516300510909,
+        "inter_std": 0.21858354138825337,
+        "separability_gap": 0.16434527622821637,
+        "n_intra": 2610,
+        "n_inter": 15954
+      },
+      "diag_E": {
+        "global_norm_mean": 13.83039028939506,
+        "global_norm_std": 1.0894491109862756,
+        "per_object_cv_mean": 0.07184736449196007,
+        "per_object_cv_std": 0.009962728628871063,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0035",
+      "diag_A": {
+        "mean": 0.5677594672441483,
+        "std": 0.018958958276323885,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8600611226574928,
+          "std": 0.20828243565052856,
+          "n_pairs": 5211
+        },
+        "gap_5": {
+          "mean": 0.7973693451199055,
+          "std": 0.21788581469307408,
+          "n_pairs": 5076
+        },
+        "gap_10": {
+          "mean": 0.777506298381083,
+          "std": 0.21675515835232623,
+          "n_pairs": 4992
+        },
+        "gap_20": {
+          "mean": 0.7644712006491085,
+          "std": 0.21576695918540806,
+          "n_pairs": 4868
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 7.486486486486487,
+        "std_matched_slots": 0.670047684787067,
+        "mean_background_fraction": 0.9750450450450451,
+        "mean_object_fraction": 0.02495495495495496,
+        "max_matched_in_frame": 8
+      },
+      "diag_D": {
+        "intra_mean": 0.8491564754658011,
+        "intra_std": 0.2269405822986637,
+        "inter_mean": 0.7380215665482498,
+        "inter_std": 0.23735505114287975,
+        "separability_gap": 0.11113490891755129,
+        "n_intra": 1454,
+        "n_inter": 4687
+      },
+      "diag_E": {
+        "global_norm_mean": 13.770855407490151,
+        "global_norm_std": 0.9057456933045326,
+        "per_object_cv_mean": 0.0628007831469012,
+        "per_object_cv_std": 0.005796092927538367,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0041",
+      "diag_A": {
+        "mean": 0.6231265395879746,
+        "std": 0.03225961325779245,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8410400965139142,
+          "std": 0.1969792423653129,
+          "n_pairs": 16348
+        },
+        "gap_5": {
+          "mean": 0.7743137273018649,
+          "std": 0.20740425990456682,
+          "n_pairs": 15488
+        },
+        "gap_10": {
+          "mean": 0.7555933286124847,
+          "std": 0.20751162166489667,
+          "n_pairs": 15165
+        },
+        "gap_20": {
+          "mean": 0.7381762491279019,
+          "std": 0.20759509920590005,
+          "n_pairs": 14924
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 16.666001994017947,
+        "std_matched_slots": 3.7905153538868377,
+        "mean_background_fraction": 0.9444466600199402,
+        "mean_object_fraction": 0.05555333998005982,
+        "max_matched_in_frame": 22
+      },
+      "diag_D": {
+        "intra_mean": 0.8724276531231767,
+        "intra_std": 0.18398951153483534,
+        "inter_mean": 0.7071768228151691,
+        "inter_std": 0.21344095193705126,
+        "separability_gap": 0.16525083030800758,
+        "n_intra": 2096,
+        "n_inter": 10655
+      },
+      "diag_E": {
+        "global_norm_mean": 13.108911223832601,
+        "global_norm_std": 0.9440821389424512,
+        "per_object_cv_mean": 0.0636388384198838,
+        "per_object_cv_std": 0.006699224512025282,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0043",
+      "diag_A": {
+        "mean": 0.6459799441662464,
+        "std": 0.014039563064716026,
+        "n_pairs": 182
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8335646668012128,
+          "std": 0.17700322411645902,
+          "n_pairs": 1620
+        },
+        "gap_5": {
+          "mean": 0.766442689544534,
+          "std": 0.19685419972888218,
+          "n_pairs": 1460
+        },
+        "gap_10": {
+          "mean": 0.7464615004686534,
+          "std": 0.19733636883825123,
+          "n_pairs": 1424
+        },
+        "gap_20": {
+          "mean": 0.7188299221916574,
+          "std": 0.1935377535821499,
+          "n_pairs": 1319
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 9.147540983606557,
+        "std_matched_slots": 0.7647150026026623,
+        "mean_background_fraction": 0.9695081967213115,
+        "mean_object_fraction": 0.030491803278688525,
+        "max_matched_in_frame": 12
+      },
+      "diag_D": {
+        "intra_mean": 0.8335646668012128,
+        "intra_std": 0.17700322411645902,
+        "inter_mean": 0.6495465466916067,
+        "inter_std": 0.19301713417934904,
+        "separability_gap": 0.18401812010960605,
+        "n_intra": 1620,
+        "n_inter": 6873
+      },
+      "diag_E": {
+        "global_norm_mean": 13.07961027995375,
+        "global_norm_std": 0.9560378899826057,
+        "per_object_cv_mean": 0.05968228336906013,
+        "per_object_cv_std": 0.009454210915139035,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0047",
+      "diag_A": {
+        "mean": 0.6177517600059509,
+        "std": 0.023951810005609822,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8721117201648455,
+          "std": 0.18802016462249113,
+          "n_pairs": 9387
+        },
+        "gap_5": {
+          "mean": 0.8085368226590672,
+          "std": 0.2007060375555531,
+          "n_pairs": 9311
+        },
+        "gap_10": {
+          "mean": 0.7753177772127503,
+          "std": 0.20390039061580822,
+          "n_pairs": 9238
+        },
+        "gap_20": {
+          "mean": 0.7387866155044338,
+          "std": 0.2092675794216132,
+          "n_pairs": 9119
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 7.822111388196176,
+        "std_matched_slots": 0.4558038372478451,
+        "mean_background_fraction": 0.9739262953726794,
+        "mean_object_fraction": 0.026073704627320587,
+        "max_matched_in_frame": 8
+      },
+      "diag_D": {
+        "intra_mean": 0.8400836961706737,
+        "intra_std": 0.1695172337336063,
+        "inter_mean": 0.6274739050555985,
+        "inter_std": 0.17077308382098588,
+        "separability_gap": 0.21260979111507516,
+        "n_intra": 1540,
+        "n_inter": 5205
+      },
+      "diag_E": {
+        "global_norm_mean": 13.8077425893891,
+        "global_norm_std": 0.9982820473278308,
+        "per_object_cv_mean": 0.07108076783685073,
+        "per_object_cv_std": 0.0031898630277447395,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0058",
+      "diag_A": {
+        "mean": 0.6639233826398849,
+        "std": 0.020661803353704867,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.930060959893682,
+          "std": 0.16174528043361197,
+          "n_pairs": 11032
+        },
+        "gap_5": {
+          "mean": 0.8880620579790723,
+          "std": 0.1766191548719412,
+          "n_pairs": 10977
+        },
+        "gap_10": {
+          "mean": 0.8706959695078106,
+          "std": 0.18371182678550546,
+          "n_pairs": 10930
+        },
+        "gap_20": {
+          "mean": 0.8567214107438689,
+          "std": 0.18666005813981518,
+          "n_pairs": 10846
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 6.901936289818863,
+        "std_matched_slots": 0.2974007715636373,
+        "mean_background_fraction": 0.9769935457006038,
+        "mean_object_fraction": 0.023006454299396212,
+        "max_matched_in_frame": 7
+      },
+      "diag_D": {
+        "intra_mean": 0.9366089444093663,
+        "intra_std": 0.1498938386235968,
+        "inter_mean": 0.8436513033450481,
+        "inter_std": 0.17608849513335958,
+        "separability_gap": 0.09295764106431814,
+        "n_intra": 1392,
+        "n_inter": 4158
+      },
+      "diag_E": {
+        "global_norm_mean": 14.487544396862186,
+        "global_norm_std": 0.8206532910051312,
+        "per_object_cv_mean": 0.055522558129071205,
+        "per_object_cv_std": 0.0083109070381628,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0063",
+      "diag_A": {
+        "mean": 0.606322676897049,
+        "std": 0.03324867736964517,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8038278959004718,
+          "std": 0.21781615937104912,
+          "n_pairs": 7572
+        },
+        "gap_5": {
+          "mean": 0.7272627476610796,
+          "std": 0.22802163291545183,
+          "n_pairs": 7448
+        },
+        "gap_10": {
+          "mean": 0.7010437400749039,
+          "std": 0.2260497927378737,
+          "n_pairs": 7357
+        },
+        "gap_20": {
+          "mean": 0.6785594172691396,
+          "std": 0.22612714751054905,
+          "n_pairs": 7221
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 7.612,
+        "std_matched_slots": 0.9713166322059971,
+        "mean_background_fraction": 0.9746266666666666,
+        "mean_object_fraction": 0.025373333333333335,
+        "max_matched_in_frame": 8
+      },
+      "diag_D": {
+        "intra_mean": 0.8034348852898432,
+        "intra_std": 0.19286801508053236,
+        "inter_mean": 0.6839859147661443,
+        "inter_std": 0.20154067224871228,
+        "separability_gap": 0.11944897052369885,
+        "n_intra": 1533,
+        "n_inter": 5182
+      },
+      "diag_E": {
+        "global_norm_mean": 13.178603950200806,
+        "global_norm_std": 1.1070523868528206,
+        "per_object_cv_mean": 0.0836182116985624,
+        "per_object_cv_std": 0.0021693787440421565,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0065",
+      "diag_A": {
+        "mean": 0.5710662015676499,
+        "std": 0.020336407906192743,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8334981513385146,
+          "std": 0.24654729343795098,
+          "n_pairs": 3497
+        },
+        "gap_5": {
+          "mean": 0.7644063141116564,
+          "std": 0.24717188644644886,
+          "n_pairs": 3475
+        },
+        "gap_10": {
+          "mean": 0.743378470769503,
+          "std": 0.24973130884920258,
+          "n_pairs": 3450
+        },
+        "gap_20": {
+          "mean": 0.7327899576764664,
+          "std": 0.24811824851251685,
+          "n_pairs": 3400
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 4.992877492877493,
+        "std_matched_slots": 0.0840938583655011,
+        "mean_background_fraction": 0.9833570750237417,
+        "mean_object_fraction": 0.01664292497625831,
+        "max_matched_in_frame": 5
+      },
+      "diag_D": {
+        "intra_mean": 0.8344965401451073,
+        "intra_std": 0.24339881746474895,
+        "inter_mean": 0.7342211247054916,
+        "inter_std": 0.24443296290667438,
+        "separability_gap": 0.10027541543961571,
+        "n_intra": 992,
+        "n_inter": 1980
+      },
+      "diag_E": {
+        "global_norm_mean": 13.980558813859664,
+        "global_norm_std": 0.9467508692706981,
+        "per_object_cv_mean": 0.06757953595793724,
+        "per_object_cv_std": 0.002844643673489304,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0073",
+      "diag_A": {
+        "mean": 0.643305605173111,
+        "std": 0.023161145120465763,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.869302669063557,
+          "std": 0.16930428079129195,
+          "n_pairs": 8428
+        },
+        "gap_5": {
+          "mean": 0.8246578057430067,
+          "std": 0.17728557970970255,
+          "n_pairs": 8337
+        },
+        "gap_10": {
+          "mean": 0.8004383330887639,
+          "std": 0.18201496186701338,
+          "n_pairs": 8235
+        },
+        "gap_20": {
+          "mean": 0.7684002301478849,
+          "std": 0.18641620339281198,
+          "n_pairs": 8041
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 12.031294452347083,
+        "std_matched_slots": 2.3124720665102694,
+        "mean_background_fraction": 0.959895685158843,
+        "mean_object_fraction": 0.04010431484115695,
+        "max_matched_in_frame": 14
+      },
+      "diag_D": {
+        "intra_mean": 0.8796765234302164,
+        "intra_std": 0.16992334197300404,
+        "inter_mean": 0.6089265077694563,
+        "inter_std": 0.23282346285128844,
+        "separability_gap": 0.27075001566076007,
+        "n_intra": 1747,
+        "n_inter": 6849
+      },
+      "diag_E": {
+        "global_norm_mean": 13.413998775319811,
+        "global_norm_std": 1.1603718701455614,
+        "per_object_cv_mean": 0.07397731492880634,
+        "per_object_cv_std": 0.01482446519301285,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0077",
+      "diag_A": {
+        "mean": 0.6568277368545532,
+        "std": 0.029903650844906326,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.9406324774233487,
+          "std": 0.15782427738366267,
+          "n_pairs": 10818
+        },
+        "gap_5": {
+          "mean": 0.9055835620250171,
+          "std": 0.17583763221853263,
+          "n_pairs": 10782
+        },
+        "gap_10": {
+          "mean": 0.8864375825499848,
+          "std": 0.18176447377880434,
+          "n_pairs": 10737
+        },
+        "gap_20": {
+          "mean": 0.8641308164349115,
+          "std": 0.18598288963363796,
+          "n_pairs": 10647
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 9.0,
+        "std_matched_slots": 0.0,
+        "mean_background_fraction": 0.97,
+        "mean_object_fraction": 0.030000000000000002,
+        "max_matched_in_frame": 9
+      },
+      "diag_D": {
+        "intra_mean": 0.9536508954316377,
+        "intra_std": 0.1387513221936739,
+        "inter_mean": 0.8314359357890984,
+        "inter_std": 0.15847861572787877,
+        "separability_gap": 0.12221495964253937,
+        "n_intra": 1800,
+        "n_inter": 7200
+      },
+      "diag_E": {
+        "global_norm_mean": 14.243053622574779,
+        "global_norm_std": 0.7389167566671039,
+        "per_object_cv_mean": 0.04973614214095731,
+        "per_object_cv_std": 0.00746694677576582,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0079",
+      "diag_A": {
+        "mean": 0.6360336029529572,
+        "std": 0.026405504614452752,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8823094965893136,
+          "std": 0.2030031296939548,
+          "n_pairs": 14486
+        },
+        "gap_5": {
+          "mean": 0.8311783092650794,
+          "std": 0.2157219152643914,
+          "n_pairs": 14408
+        },
+        "gap_10": {
+          "mean": 0.8125741109529051,
+          "std": 0.21719116704799768,
+          "n_pairs": 14319
+        },
+        "gap_20": {
+          "mean": 0.790479294900755,
+          "std": 0.22123236348616873,
+          "n_pairs": 14137
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 12.07487520798669,
+        "std_matched_slots": 3.3870239356746423,
+        "mean_background_fraction": 0.9597504159733777,
+        "mean_object_fraction": 0.0402495840266223,
+        "max_matched_in_frame": 18
+      },
+      "diag_D": {
+        "intra_mean": 0.8555884521083296,
+        "intra_std": 0.21349061276826273,
+        "inter_mean": 0.6986738745905229,
+        "inter_std": 0.22674231700579117,
+        "separability_gap": 0.15691457751780669,
+        "n_intra": 1786,
+        "n_inter": 7114
+      },
+      "diag_E": {
+        "global_norm_mean": 13.724252174950934,
+        "global_norm_std": 0.9979389032951896,
+        "per_object_cv_mean": 0.06814093736403966,
+        "per_object_cv_std": 0.00909238795976877,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0081",
+      "diag_A": {
+        "mean": 0.6321570048332215,
+        "std": 0.01906256486342346,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.835837440814041,
+          "std": 0.2185064438547519,
+          "n_pairs": 18633
+        },
+        "gap_5": {
+          "mean": 0.765933161189845,
+          "std": 0.22925377621258855,
+          "n_pairs": 18370
+        },
+        "gap_10": {
+          "mean": 0.7377105916555053,
+          "std": 0.23005176125765117,
+          "n_pairs": 18188
+        },
+        "gap_20": {
+          "mean": 0.7107205807968772,
+          "std": 0.2304572875387504,
+          "n_pairs": 17890
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 19.0640243902439,
+        "std_matched_slots": 0.9642841733041101,
+        "mean_background_fraction": 0.9364532520325203,
+        "mean_object_fraction": 0.06354674796747968,
+        "max_matched_in_frame": 20
+      },
+      "diag_D": {
+        "intra_mean": 0.8274906852931809,
+        "intra_std": 0.2135416272328678,
+        "inter_mean": 0.6263423369052465,
+        "inter_std": 0.2112477734055653,
+        "separability_gap": 0.20114834838793438,
+        "n_intra": 3691,
+        "n_inter": 32928
+      },
+      "diag_E": {
+        "global_norm_mean": 13.293229208781055,
+        "global_norm_std": 1.0341610499069158,
+        "per_object_cv_mean": 0.07582975513606663,
+        "per_object_cv_std": 0.008663205793760424,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0090",
+      "diag_A": {
+        "mean": 0.6550258802175521,
+        "std": 0.016767549520041912,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.878553697058307,
+          "std": 0.17789881771220747,
+          "n_pairs": 13023
+        },
+        "gap_5": {
+          "mean": 0.8199334218244837,
+          "std": 0.1868746541679203,
+          "n_pairs": 12705
+        },
+        "gap_10": {
+          "mean": 0.7968396909995747,
+          "std": 0.19136916312419883,
+          "n_pairs": 12494
+        },
+        "gap_20": {
+          "mean": 0.7774150086158227,
+          "std": 0.19281015515060695,
+          "n_pairs": 12261
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 13.088645418326694,
+        "std_matched_slots": 1.141009616955521,
+        "mean_background_fraction": 0.956371181938911,
+        "mean_object_fraction": 0.04362881806108899,
+        "max_matched_in_frame": 14
+      },
+      "diag_D": {
+        "intra_mean": 0.8682149707509385,
+        "intra_std": 0.17760919671423991,
+        "inter_mean": 0.6593532913083943,
+        "inter_std": 0.21529207643512913,
+        "separability_gap": 0.2088616794425442,
+        "n_intra": 2426,
+        "n_inter": 14084
+      },
+      "diag_E": {
+        "global_norm_mean": 13.771733645117,
+        "global_norm_std": 1.0033757817460776,
+        "per_object_cv_mean": 0.06636858758995327,
+        "per_object_cv_std": 0.007611231118780053,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0094",
+      "diag_A": {
+        "mean": 0.6526842283010483,
+        "std": 0.019741516086866345,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.8651244238989417,
+          "std": 0.18102984568597064,
+          "n_pairs": 11503
+        },
+        "gap_5": {
+          "mean": 0.8079343248697298,
+          "std": 0.19383763712485402,
+          "n_pairs": 10961
+        },
+        "gap_10": {
+          "mean": 0.785213140800558,
+          "std": 0.1965788037437211,
+          "n_pairs": 10607
+        },
+        "gap_20": {
+          "mean": 0.7603105787153939,
+          "std": 0.1994577040338613,
+          "n_pairs": 10227
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 19.412935323383085,
+        "std_matched_slots": 2.0940487038887285,
+        "mean_background_fraction": 0.935290215588723,
+        "mean_object_fraction": 0.06470978441127694,
+        "max_matched_in_frame": 23
+      },
+      "diag_D": {
+        "intra_mean": 0.8683144684562463,
+        "intra_std": 0.18092281651523812,
+        "inter_mean": 0.6510868115846195,
+        "inter_std": 0.21624188514382053,
+        "separability_gap": 0.21722765687162682,
+        "n_intra": 3655,
+        "n_inter": 33202
+      },
+      "diag_E": {
+        "global_norm_mean": 13.451196170557916,
+        "global_norm_std": 1.051748082281672,
+        "per_object_cv_mean": 0.0645900334182863,
+        "per_object_cv_std": 0.012073989299311251,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    },
+    {
+      "sequence": "dancetrack0097",
+      "diag_A": {
+        "mean": 0.6069779022932053,
+        "std": 0.022233758841887608,
+        "n_pairs": 500
+      },
+      "diag_B": {
+        "gap_1": {
+          "mean": 0.9276706059436289,
+          "std": 0.1656073585886177,
+          "n_pairs": 4651
+        },
+        "gap_5": {
+          "mean": 0.8786887918416898,
+          "std": 0.18200750930465578,
+          "n_pairs": 4599
+        },
+        "gap_10": {
+          "mean": 0.8612346184330931,
+          "std": 0.18453349882408598,
+          "n_pairs": 4553
+        },
+        "gap_20": {
+          "mean": 0.8445386709537531,
+          "std": 0.18764806332578735,
+          "n_pairs": 4490
+        }
+      },
+      "diag_C": {
+        "mean_matched_slots": 3.880299251870324,
+        "std_matched_slots": 0.3396285343886926,
+        "mean_background_fraction": 0.9870656691604323,
+        "mean_object_fraction": 0.01293433083956775,
+        "max_matched_in_frame": 4
+      },
+      "diag_D": {
+        "intra_mean": 0.9525652491679443,
+        "intra_std": 0.13228579453939276,
+        "inter_mean": 0.8369630237808255,
+        "inter_std": 0.18955091376624897,
+        "separability_gap": 0.11560222538711873,
+        "n_intra": 796,
+        "n_inter": 1191
+      },
+      "diag_E": {
+        "global_norm_mean": 14.483468785690464,
+        "global_norm_std": 0.7222841972633597,
+        "per_object_cv_mean": 0.049770413076713926,
+        "per_object_cv_std": 0.0016408822204171864,
+        "interpretation": "CV close to 0 means embedding magnitude is stable per object. High CV (>0.2) would indicate magnitude drift."
+      }
+    }
+  ]
+}
