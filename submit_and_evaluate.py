@@ -96,6 +96,7 @@ def submit_and_evaluate(config: dict):
         newborn_thresh=config["NEWBORN_THRESH"],
         id_thresh=config["ID_THRESH"],
         area_thresh=config.get("AREA_THRESH", 0),
+        temperature=config.get("INFERENCE_TEMPERATURE", 1.0),
         inference_only_detr=config["INFERENCE_ONLY_DETR"] if config["INFERENCE_ONLY_DETR"] is not None
         else config["ONLY_DETR"],
         dtype=config.get("INFERENCE_DTYPE", "FP32"),
@@ -134,7 +135,7 @@ def submit_and_evaluate_one_model(
         newborn_thresh: float = 0.5,
         id_thresh: float = 0.1,
         area_thresh: int = 0,
-        temperature: float = 1.0, 
+        temperature: float = 1.0,
         inference_only_detr: bool = False,
         dtype: str = "FP32",
 ):
@@ -184,7 +185,6 @@ def submit_and_evaluate_one_model(
             max_longer=image_max_longer,
             size_divisibility=size_divisibility,
             dtype=dtype,
-
         )
         sequence_loader = DataLoader(
             dataset=sequence_dataset,
@@ -209,7 +209,6 @@ def submit_and_evaluate_one_model(
             only_detr=inference_only_detr,
             dtype=dtype,
             temperature=temperature,
-
         )
         if is_fake:
             logger.info(
