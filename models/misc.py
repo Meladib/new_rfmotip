@@ -139,16 +139,13 @@ def load_detr_pretrain(model: nn.Module, pretrain_path: str, num_classes: int | 
     return
 
 
-def save_checkpoint(model, path, states: dict, optimizer, scheduler,
-                    only_detr: bool = False, contrastive_criterion=None):
-    if is_main_process():
+def save_checkpoint(model, path, states: dict, optimizer, scheduler, only_detr: bool = False):
+    if is_main_process():   # only save the model in the main process.
         model = get_model(model)
         if only_detr:
             model = model.detr
         save_state = {
             "model": model.state_dict(),
-            "contrastive": contrastive_criterion.state_dict()
-                           if contrastive_criterion is not None else None,
             "optimizer": optimizer.state_dict() if optimizer is not None else None,
             "scheduler": scheduler.state_dict() if scheduler is not None else None,
             "states": states,
@@ -157,8 +154,7 @@ def save_checkpoint(model, path, states: dict, optimizer, scheduler,
     return
 
 
-def load_checkpoint(model, path, states=None, optimizer=None, scheduler=None,
-                    strict: bool = True):
+def load_checkpoint(model, path, states=None, optimizer=None, scheduler=None):
     load_state = torch.load(path, map_location=lambda storage, loc: storage, weights_only=False)
     model_state = load_state["model"]
 
@@ -166,10 +162,7 @@ def load_checkpoint(model, path, states=None, optimizer=None, scheduler=None,
         load_detr_pretrain(model=model, pretrain_path=path, num_classes=None)
         return
     else:
-        missing, unexpected = model.load_state_dict(model_state, strict=strict)
-        if not strict and missing:
-            print(f"[load_checkpoint] Non-strict load: {len(missing)} new keys "
-                  f"initialized from scratch: {[k for k in missing[:5]]}")
+        model.load_state_dict(model_state)
 
     if optimizer is not None:
         optimizer.load_state_dict(load_state["optimizer"])
