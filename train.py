@@ -127,11 +127,7 @@ def train_engine(config: dict):
     """
     # Build Loss Function:
     id_criterion = build_id_criterion(config=config)
-
-    contrastive_criterion = build_contrastive_criterion(config=config) \
-        if (not config.get("ONLY_DETR", False) 
-            and config.get("USE_CONTRASTIVE", True)) else None
-
+    contrastive_criterion = build_contrastive_criterion(config=config) if not config.get("ONLY_DETR", False) else None
     if contrastive_criterion is not None:
         contrastive_criterion = contrastive_criterion.to(accelerator.device)
     # Build Optimizer:
@@ -169,20 +165,7 @@ def train_engine(config: dict):
             optimizer=optimizer if config["RESUME_OPTIMIZER"] else None,
             scheduler=scheduler if config["RESUME_SCHEDULER"] else None,
             states=train_states,
-            strict=config.get("RESUME_STRICT", True),
         )
-        # Load contrastive projection weights if saved in checkpoint
-        if contrastive_criterion is not None:
-            _ckpt_raw = torch.load(
-                config["RESUME_MODEL"],
-                map_location="cpu", weights_only=False,
-            )
-            if _ckpt_raw.get("contrastive") is not None:
-                contrastive_criterion.load_state_dict(_ckpt_raw["contrastive"])
-                logger.success("Contrastive criterion weights loaded from checkpoint.")
-            else:
-                logger.info("No contrastive state in checkpoint — starting fresh (Xavier init).")
-            del _ckpt_raw
         # Different processing on scheduler:
         if config["RESUME_SCHEDULER"]:
             scheduler.step()
@@ -234,7 +217,6 @@ def train_engine(config: dict):
             outputs_dir=outputs_dir,
             is_last_epochs=(epoch == config["EPOCHS"] - 1),
             multi_last_checkpoints=config["MULTI_LAST_CHECKPOINTS"],
-            use_reid_proj=config.get("USE_REID_PROJ", False), #reid change
         )
 
         # Get learning rate:
@@ -262,7 +244,6 @@ def train_engine(config: dict):
                 optimizer=optimizer,
                 scheduler=scheduler,
                 only_detr=only_detr,
-                contrastive_criterion=contrastive_criterion,
             )
             if config["INFERENCE_DATASET"] is not None:
                 assert config["INFERENCE_SPLIT"] is not None, f"Please set the INFERENCE_SPLIT for inference."
@@ -335,7 +316,6 @@ def train_one_epoch(
         outputs_dir: str = None,
         is_last_epochs: bool = False,
         multi_last_checkpoints: int = 0,
-        use_reid_proj: bool = False, #reid change
 ):
     current_last_checkpoint_idx = 0
 
@@ -495,26 +475,18 @@ def train_one_epoch(
         # Whether to only train the DETR, OR to train the MOTIP together:
         if not only_detr:
             _G, _, _N = annotations[0][0]["trajectory_id_labels"].shape
-
             # Need to prepare for MOTIP:
             seq_info = prepare_for_motip(
                 detr_outputs=detr_outputs, annotations=annotations, detr_indices=detr_indices,
             )
-    
             seq_info = model(seq_info=seq_info, part="trajectory_modeling")
-
             con_loss, con_log = contrastive_criterion(seq_info) if contrastive_criterion is not None else (None, None)
-            if use_reid_proj:
-                seq_info["trajectory_features"] = seq_info["trajectory_features"].detach()
-                seq_info["unknown_features"]     = seq_info["unknown_features"].detach()
             id_logits, id_gts, id_masks = model(
                 seq_info=seq_info,
                 part="id_decoder",
                 use_decoder_checkpoint=use_decoder_checkpoint,
             )
-
             id_loss = id_criterion(id_logits=id_logits, id_labels=id_gts, id_masks=id_masks)
-            
             _num_gts_per_frame = max(_num_gts_per_frame, id_gts.shape[-1])
             # print(f"Num of GTs per frame: {_num_gts_per_frame}")
             pass
@@ -531,7 +503,7 @@ def train_one_epoch(
             loss = (
                 detr_loss
                 + (id_loss if id_loss is not None else 0) * id_criterion.weight
-                + (con_loss if con_loss is not None else 0) * (contrastive_criterion.weight if contrastive_criterion is not None else 1.0)
+                + (con_loss if con_loss is not None else 0) * contrastive_criterion.weight
             )
             # Logging losses:
             metrics.update(name="loss", value=loss.item())
