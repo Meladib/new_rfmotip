@@ -212,7 +212,7 @@ class RuntimeTracker:
                 id_scores = id_logits.softmax(dim=-1)
             else:
                 id_scores = id_logits.sigmoid()
-            if self.temperature != 1.0:
+            if hasattr(self, 'temperature') and self.temperature != 1.0:
                 id_scores = (id_scores.clamp(min=1e-9).log() / self.temperature).softmax(dim=-1)
             # 5. assign id labels:
             # Different assignment protocols:
