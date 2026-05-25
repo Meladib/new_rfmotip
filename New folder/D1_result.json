@@ -1,0 +1,87 @@
+{
+  "failure_type": "GENERALIZATION_GAP",
+  "mean_delta_id_loss_post0": -0.01815555555555555,
+  "mean_delta_assa_post0": -0.014571428571427094,
+  "per_epoch": {
+    "0": {
+      "v3_id_loss": 1.271,
+      "v4_id_loss": 1.4638,
+      "delta_id_loss": 0.19280000000000008,
+      "v3_assa": 25.37,
+      "v4_assa": 26.01,
+      "delta_assa": 0.6400000000000006
+    },
+    "1": {
+      "v3_id_loss": 0.7414,
+      "v4_id_loss": 0.7201,
+      "delta_id_loss": -0.021299999999999986,
+      "v3_assa": 30.36,
+      "v4_assa": 31.46,
+      "delta_assa": 1.1000000000000014
+    },
+    "2": {
+      "v3_id_loss": 0.6665,
+      "v4_id_loss": 0.6442,
+      "delta_id_loss": -0.022299999999999986,
+      "v3_assa": 32.2,
+      "v4_assa": 34.98,
+      "delta_assa": 2.779999999999994
+    },
+    "3": {
+      "v3_id_loss": 0.6204,
+      "v4_id_loss": 0.5981,
+      "delta_id_loss": -0.022299999999999986,
+      "v3_assa": 33.18,
+      "v4_assa": 35.27,
+      "delta_assa": 2.0900000000000034
+    },
+    "4": {
+      "v3_id_loss": 0.5874,
+      "v4_id_loss": 0.5669,
+      "delta_id_loss": -0.020500000000000074,
+      "v3_assa": 34.73,
+      "v4_assa": 34.34,
+      "delta_assa": -0.38999999999999346
+    },
+    "5": {
+      "v3_id_loss": 0.5657,
+      "v4_id_loss": 0.5474,
+      "delta_id_loss": -0.018299999999999983,
+      "v3_assa": 36.3,
+      "v4_assa": 34.35,
+      "delta_assa": -1.9499999999999957
+    },
+    "6": {
+      "v3_id_loss": 0.5207,
+      "v4_id_loss": 0.506,
+      "delta_id_loss": -0.014700000000000046,
+      "v3_assa": 38.03,
+      "v4_assa": 36.77,
+      "delta_assa": -1.259999999999998
+    },
+    "7": {
+      "v3_id_loss": 0.5114,
+      "v4_id_loss": 0.4958,
+      "delta_id_loss": -0.015599999999999947,
+      "v3_assa": 38.712,
+      "v4_assa": 36.24,
+      "delta_assa": -2.4720000000000013
+    },
+    "8": {
+      "v3_id_loss": 0.5074,
+      "v4_id_loss": 0.4929,
+      "delta_id_loss": -0.014499999999999957,
+      "v3_assa": null,
+      "v4_assa": 36.04,
+      "delta_assa": null
+    },
+    "9": {
+      "v3_id_loss": 0.5031,
+      "v4_id_loss": 0.4892,
+      "delta_id_loss": -0.013899999999999968,
+      "v3_assa": null,
+      "v4_assa": 36.25,
+      "delta_assa": null
+    }
+  }
+}

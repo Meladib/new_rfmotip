@@ -1,0 +1,37 @@
+{
+  "n_val_embeddings": 44217,
+  "n_val_ids": 252,
+  "baseline": {
+    "intra_mean": 0.7398854317481455,
+    "inter_mean": 0.6604986152672019,
+    "gap": 0.07938681648094359,
+    "n_intra": 7056,
+    "n_inter": 8982
+  },
+  "lda_oracle": {
+    "intra_mean": 0.31695293976298095,
+    "inter_mean": 0.12650058037988995,
+    "gap": 0.190452359383091,
+    "n_intra": 7056,
+    "n_inter": 8982
+  },
+  "checkpoint_3": {
+    "intra_mean": 0.5545412653082001,
+    "inter_mean": 0.3993501206163684,
+    "gap": 0.15519114469183176,
+    "n_intra": 7056,
+    "n_inter": 8982,
+    "drift": 5.6843999114369215
+  },
+  "checkpoint_6": {
+    "intra_mean": 0.5472427263912426,
+    "inter_mean": 0.38672831510184313,
+    "gap": 0.16051441128939947,
+    "n_intra": 7056,
+    "n_inter": 8982,
+    "drift": 6.415144081939353
+  },
+  "ep3_improves_val": true,
+  "ep6_degrades_vs_ep3": false,
+  "overfitting_confirmed": false
+}
