@@ -1,7 +1,6 @@
 # Copyright (c) Ruopeng Gao. All Rights Reserved.
 
 import torch
-import torch.nn as nn
 import argparse
 
 from .motip import MOTIP
@@ -103,17 +102,6 @@ def build(config: dict):
         use_shared_aux_head=config["USE_SHARED_AUX_HEAD"],
     ) if config["ONLY_DETR"] is False else None
 
-    # 3. re-ID projection head (V4, identity-initialised Linear + LayerNorm):
-    _feature_dim = config["FEATURE_DIM"]
-    if config.get("USE_REID_PROJ", False):
-        _reid_proj = nn.Sequential(
-            nn.Linear(_feature_dim, _feature_dim, bias=False),
-            nn.LayerNorm(_feature_dim),
-        )
-        nn.init.eye_(_reid_proj[0].weight)
-    else:
-        _reid_proj = None
-
     # Construct MOTIP model:
     motip_model = MOTIP(
         detr=detr,
@@ -121,7 +109,7 @@ def build(config: dict):
         only_detr=config["ONLY_DETR"],
         trajectory_modeling=_trajectory_modeling,
         id_decoder=_id_decoder,
-        reid_proj=_reid_proj,
     )
 
     return motip_model, detr_criterion
+    
