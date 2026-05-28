@@ -4,19 +4,7 @@
 Temporal Supervised Contrastive Loss with Isolated Projection Head
 ==================================================================
 
-WHY THE PREVIOUS DESIGN FAILED (AssA = 0.11)
----------------------------------------------
-The previous loss applied contrastive directly on trajectory_features,
-which are the SAME tensors used as keys/values in IDDecoder cross-attention.
 
-Two gradient paths competed on the same features:
-  (A) id_loss  → IDDecoder cross-attention → trajectory_features
-  (B) con_loss → trajectory_features  (no intermediate module)
-
-Path (B) had no attenuation — the full contrastive gradient hit
-trajectory_features directly, corrupting the cross-attention space
-that path (A) was simultaneously trying to learn. IDDecoder never
-stabilized. Result: AssA = 0.11.
 
 WHAT THE DIAGNOSTICS PROVED
 -----------------------------
