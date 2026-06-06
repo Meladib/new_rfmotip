@@ -1,0 +1,35 @@
+SUPER_CONFIG_PATH: ./configs/r50_deformable_detr_motip_dancetrack.yaml
+
+CKPT_PATH: rfdetr_dancetrack_motip/checkpoint_best_total.pth
+DETR_FRAMEWORK: rf_detr
+
+DETR_PRETRAIN: null
+NUM_CLASSES: 1
+
+SIZE_DIVISIBILITY: 32
+DATA_ROOT: /data/pos+mot/Datadir/
+
+# Training Strategies:
+EPOCHS: 20
+EPOCHS: 14            
+SCHEDULER_MILESTONES: [99] 
+LR: 1.0e-4
+SAMPLE_LENGTHS: [30, ]
+DETR_TWO_STAGE: False
+USE_FOCAL_LOSS: False
+DETR_DEC_LAYERS: 6
+AUG_NUM_GROUPS: 6
+USE_DECODER_CHECKPOINT: False
+NUM_ID_DECODER_LAYERS: 6
+DETR_NUM_TRAIN_FRAMES: 0
+
+CONTRASTIVE_WEIGHT:    0.05
+CONTRASTIVE_TEMP:      0.3
+CONTRASTIVE_PROJ_DIM:  128
+CONTRASTIVE_WARMUP:    500
+INFERENCE_TEMPERATURE: 1.0
+
+RESUME_MODEL: rfdetr_dancetrack_motip/checkpoint_7.pth
+RESUME_OPTIMIZER: False
+RESUME_SCHEDULER: False
+
