@@ -191,24 +191,25 @@ class IDDecoder(nn.Module):
         # >>> set self._sp_calib_done=True path off (or just leave it — once
         # >>> calibrated it prints once and stops). For the REAL run, replace
         # >>> the spatial_bin_edges tensor with the printed [q25,q50,q75].
-        if False:  # calibration disabled; edges set by fixed IoU thresholds
-            if not hasattr(self, "_sp_calib_buf"):
-                self._sp_calib_buf = []
-                self._sp_calib_steps = 0
-            self._sp_calib_buf.append(sp_iou.detach().flatten().float().cpu())
-            self._sp_calib_steps += 1
-            if self._sp_calib_steps >= 300:
-                allv = torch.cat(self._sp_calib_buf)
-                if allv.numel() > 1_000_000:
-                    sel = torch.randperm(allv.numel())[:1_000_000]
-                    allv = allv[sel]
-                qs = torch.quantile(allv, torch.tensor([0.25, 0.5, 0.75]))
-                edges = [round(x.item(), 4) for x in qs]
-                hist = torch.bincount(sp_idx.flatten(), minlength=self.num_spatial_bins).tolist()
-                print(f"[spatial-calib] N={allv.numel()} CURRENT_bin_hist={hist} "
-                      f"=> SET spatial_bin_edges = torch.tensor({edges})", flush=True)
-                self._sp_calib_done = True
-                self._sp_calib_buf = []
+        if not hasattr(self, "_sp_hist_done"):   # one-shot edge-space diagnostic
+            self._sp_hist_done = True
+            _bg = _B * _G
+            _L1, _L2 = sp_iou.shape[1], sp_iou.shape[2]
+            _time_mask = cross_attn_mask.view(_bg, self.n_heads, _L1, _L2)[:, 0]   # True = causally masked
+            _key_pad   = cross_attn_key_padding_mask.view(_bg, 1, _L2)             # True = padded key
+            _allowed   = (~_time_mask) & (~_key_pad)                              # positions the bias affects
+            _v   = sp_iou[_allowed].detach().float()
+            _raw = sp_iou.detach().flatten().float()
+            if _v.numel() > 0:
+                _q = torch.quantile(_v, torch.tensor([0.10, 0.25, 0.50, 0.75, 0.90], device=_v.device))
+                _h = torch.bincount(sp_idx[_allowed].flatten(), minlength=self.num_spatial_bins)
+                _hi   = (sp_idx == self.num_spatial_bins - 1)  
+                _frac = (_hi & _allowed).sum().float() / _hi.sum().clamp(min=1).float()
+                print(f"[sp-hist] ALLOWED n={_v.numel()} min={_v.min():.4f} mean={_v.mean():.4f} "
+                      f"max={_v.max():.4f} q10/25/50/75/90={[round(x.item(),4) for x in _q]} "
+                      f"bin_hist(edges={self.spatial_bin_edges.tolist()})={_h.tolist()}", flush=True)
+                print(f"[sp-hist] RAW n={_raw.numel()} max={_raw.max():.4f} (box-format check)", flush=True)
+                print(f"[sp-align] frac_hi_on_allowed={_frac.item():.4f} n_hi={int(_hi.sum())}", flush=True)
         # >>> END SPATIAL BIAS
 
         # Change Cross-Attn key_padding_mask and attn_mask to float:
@@ -301,14 +302,11 @@ class IDDecoder(nn.Module):
         # >>> terms to match cross_attn_mask (which is self.dtype). Order matters:
         # >>> cross_attn_mask holds -inf at padded/future keys; -inf + finite
         # >>> spatial bias stays -inf, so padded positions remain masked.
+        
         rel_sp_mask = self.rel_spatial_embeds[layer][sp_idx]   # (bg, l1, l2, n_heads) f32
-        assert rel_sp_mask.shape == rel_pe_mask.shape, \
-            f"spatial mask {tuple(rel_sp_mask.shape)} != temporal mask {tuple(rel_pe_mask.shape)}"
-        cross_attn_mask_with_rel_pe = (
-            cross_attn_mask
-            + einops.rearrange(rel_pe_mask, "bg l1 l2 n -> (bg n) l1 l2").to(cross_attn_mask.dtype)
-            + einops.rearrange(rel_sp_mask, "bg l1 l2 n -> (bg n) l1 l2").to(cross_attn_mask.dtype)
-        )
+        rel_bias = rel_pe_mask + rel_sp_mask                   # combine in compact layout (one small add)
+        cross_attn_mask_with_rel_pe = cross_attn_mask + einops.rearrange(rel_bias, "bg l1 l2 n -> (bg n) l1 l2")
+
         # >>> END SPATIAL BIAS
         # Apply cross-attention:
         cross_out, _ = self.cross_attn_layers[layer](
