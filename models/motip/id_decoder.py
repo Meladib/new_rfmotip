@@ -1,12 +1,3 @@
-# Copyright (c) Ruopeng Gao. All Rights Reserved.
-#
-# MODIFIED: adds a relative-SPATIAL bias term to the cross-attention logit,
-# structurally the twin of the existing relative-TEMPORAL bias (rel_pos_embeds).
-# Indexed by binned IoU(unknown_i, trajectory_j), zero-initialized so the model
-# is byte-identical to V3 at step 0. All injected lines are marked with
-# `# >>> SPATIAL BIAS`. DIFF THIS AGAINST YOUR V3 id_decoder.py: keep your
-# version for any unchanged line that differs; keep only the marked injections.
-
 import torch
 import einops
 import torch.nn as nn
@@ -81,6 +72,35 @@ class IDDecoder(nn.Module):
         )
         # >>> END SPATIAL BIAS
 
+        # >>> MOTION BIAS (V5): time-conditioned motion-IoU bias — third twin of
+        # >>> rel_pos_embeds / rel_spatial_embeds. Indexed by the FUSED cell
+        # >>> (motion_iou_bin * num_dt_bins + dt_bin). Zero-init -> V5 forward is
+        # >>> byte-identical to V4 epoch 11 at step 0 (Theorem 1).
+        self.num_motion_iou_bins = 4
+        self.num_dt_bins = 4
+        self.num_motion_cells = self.num_motion_iou_bins * self.num_dt_bins   # 16
+        self.rel_motion_embeds = nn.Parameter(
+            torch.zeros((self.num_layers, self.num_motion_cells, self.n_heads), dtype=torch.float32)
+        )
+        # >>> PLACEHOLDER edges — MUST be recalibrated before the real fine-tune
+        # >>> (Lemma 7: empty cell => zero gradient => untrained parameter — the
+        # >>> exact W2 pathology V4 shipped with). Run one batch, read the
+        # >>> [mot-hist] q25/q50/q75 of ALLOWED motion-IoU, hardcode them here.
+        self.register_buffer(
+            "motion_iou_edges",
+            torch.tensor([0.05, 0.3, 0.6], dtype=torch.float32),
+            persistent=True,
+        )
+        # >>> dt bins: {1}, {2..4}, {5..12}, {>=13} frames — spans the
+        # >>> MISS_TOLERANCE=30 window; edges are half-integers so integer dt
+        # >>> values bucketize unambiguously.
+        self.register_buffer(
+            "dt_bin_edges",
+            torch.tensor([1.5, 4.5, 12.5], dtype=torch.float32),
+            persistent=True,
+        )
+        # >>> END MOTION BIAS
+
         self_attn = nn.MultiheadAttention(
             embed_dim=self.feature_dim + self.id_dim,
             num_heads=self.n_heads,
@@ -115,7 +135,9 @@ class IDDecoder(nn.Module):
         for n, p in self.named_parameters():
             # >>> SPATIAL BIAS: exclude rel_spatial_embeds from Xavier so it stays
             # >>> zero-initialized (same treatment as rel_pos_embeds).
-            if p.dim() > 1 and "rel_pos_embeds" not in n and "rel_spatial_embeds" not in n:
+            # >>> MOTION BIAS (V5): rel_motion_embeds excluded for the same reason.
+            if p.dim() > 1 and "rel_pos_embeds" not in n and "rel_spatial_embeds" not in n \
+                    and "rel_motion_embeds" not in n:
                 nn.init.xavier_uniform_(p)
 
         pass
@@ -211,6 +233,104 @@ class IDDecoder(nn.Module):
                 print(f"[sp-hist] RAW n={_raw.numel()} max={_raw.max():.4f} (box-format check)", flush=True)
                 print(f"[sp-align] frac_hi_on_allowed={_frac.item():.4f} n_hi={int(_hi.sum())}", flush=True)
         # >>> END SPATIAL BIAS
+        # >>> MOTION BIAS (V5): build the motion cell index ONCE before the layer
+        # >>> loop. Signal: IoU(detection_i, velocity-extrapolated box of identity
+        # >>> j), jointly binned with the observation gap dt — the G2-validated
+        # >>> motion signal (GT-anchored AUC 0.807).
+        # >>>
+        # >>> CAUSAL PER-QUERY-TIME SELECTION. For a query with time u, only
+        # >>> trajectory observations with time < u are used — the exact
+        # >>> complement of the attention-mask predicate (traj_time >=
+        # >>> unknown_time). NOTE this is deliberately stricter than the V4
+        # >>> spatial index above (global argmax): global selection would (a)
+        # >>> leak future boxes into training-time indices and (b) yield
+        # >>> negative dt for early queries. Causal selection makes the train
+        # >>> and inference index distributions identical by construction; at
+        # >>> inference (_curr_T == 1, all trajectory slots in the past) it
+        # >>> reduces to "most recent + second most recent".
+        _valid_m = ~trajectory_masks                                          # (B,G,T,N) True = valid
+        _bhat_list, _dt_list = [], []
+        for _tq in range(_curr_T):
+            _u = unknown_times[:, :, _tq, 0]                                  # (B,G) query time (uniform over n; asserted below)
+            _lt = _valid_m & (trajectory_times < _u[:, :, None, None])        # obs strictly before this query
+            _tm_q = torch.where(_lt, trajectory_times,
+                                torch.full_like(trajectory_times, -1))        # invalid/future -> -1
+            _k = min(2, _T)
+            _top_t, _top_i = _tm_q.topk(k=_k, dim=2)                          # (B,G,k,N)
+            _g_idx = _top_i.unsqueeze(-1).expand(_B, _G, _k, _N, 4)
+            _top_b = torch.gather(trajectory_boxes, 2, _g_idx)                # (B,G,k,N,4)
+            _t1, _b1 = _top_t[:, :, 0], _top_b[:, :, 0]                       # most recent (< u)
+            if _k == 2:
+                _t2, _b2 = _top_t[:, :, 1], _top_b[:, :, 1]
+            else:
+                _t2, _b2 = torch.full_like(_t1, -1), _b1
+            _has2 = (_t1 >= 0) & (_t2 >= 0)                                   # >=2 prior observations
+            _dt_now = (_u[:, :, None] - _t1).to(torch.float32)                # (B,G,N); >=1 on all allowed keys
+            _dt_obs = (_t1 - _t2).to(torch.float32).clamp(min=1.0)
+            _vel = torch.where(
+                _has2.unsqueeze(-1),
+                (_b1[..., :2] - _b2[..., :2]).to(torch.float32) / _dt_obs.unsqueeze(-1),
+                torch.zeros((_B, _G, _N, 2), dtype=torch.float32, device=_b1.device),
+            )                                                                  # center velocity; w,h NOT extrapolated
+            _pred_c = (_b1[..., :2].to(torch.float32)
+                       + _vel * _dt_now.unsqueeze(-1)).clamp(0.0, 1.0)
+            _bhat_list.append(torch.cat([_pred_c, _b1[..., 2:].to(torch.float32)], dim=-1))
+            _dt_list.append(_dt_now)
+        _bhat = torch.stack(_bhat_list, dim=2)                                # (B,G,Tq,N,4) f32
+        _dt_all = torch.stack(_dt_list, dim=2)                                # (B,G,Tq,N)  f32
+        # IoU(query box at its own time, predicted box of identity j AS OF that time):
+        _unk_bt = einops.rearrange(unknown_boxes, "b g t n c -> (b g t) n c").to(torch.float32)
+        _hat_bt = einops.rearrange(_bhat, "b g t n c -> (b g t) n c")
+        mot_iou = self._pairwise_iou_cxcywh(_unk_bt, _hat_bt)                 # ((b g t), Nu, Nt) f32
+        mot_iou = einops.rearrange(mot_iou, "(b g t) nu nt -> (b g) (t nu) nt",
+                                   b=_B, g=_G, t=_curr_T)                     # (bg, L1, Nt)
+        _mu = torch.bucketize(
+            mot_iou, self.motion_iou_edges.to(mot_iou.device)
+        ).clamp_(0, self.num_motion_iou_bins - 1)                             # (bg, L1, Nt)
+        _dt_mat = einops.repeat(
+            einops.rearrange(_dt_all, "b g t n -> (b g) t n"),
+            "bg t nt -> bg (t nu) nt", nu=_curr_N,
+        ).contiguous()                                                         # (bg, L1, Nt)
+        _delta = torch.bucketize(
+            _dt_mat, self.dt_bin_edges.to(_dt_mat.device)
+        ).clamp_(0, self.num_dt_bins - 1)
+        mot_idx = (_mu * self.num_dt_bins + _delta)                            # fused cell in [0, 16)
+        mot_idx = einops.repeat(mot_idx, "bg l1 nt -> bg l1 (tk nt)", tk=_T).contiguous()
+        # ^ broadcast across KEY time: key axis was flattened "(t n)" with t
+        #   outer, so "(tk nt)" matches the existing key layout exactly.
+
+        # >>> One-shot pre-flight diagnostic (mirrors [sp-hist]; runs once):
+        if not hasattr(self, "_mot_hist_done"):
+            self._mot_hist_done = True
+            _bg = _B * _G
+            _L1, _L2 = mot_idx.shape[1], mot_idx.shape[2]
+            _time_mask = cross_attn_mask.view(_bg, self.n_heads, _L1, _L2)[:, 0]
+            _key_pad = cross_attn_key_padding_mask.view(_bg, 1, _L2)
+            _allowed = (~_time_mask) & (~_key_pad)
+            # (a) time-uniformity assumption used for _u:
+            _ut_chk = unknown_times.float()
+            _ut_spread = (_ut_chk.max(dim=3).values - _ut_chk.min(dim=3).values).abs().max()
+            # (b) causal guarantee: dt >= 1 on every allowed position:
+            _dt_keyspace = einops.repeat(_dt_mat, "bg l1 nt -> bg l1 (tk nt)", tk=_T)
+            _dt_min_allowed = _dt_keyspace[_allowed].min() if _allowed.any() else torch.tensor(float("nan"))
+            # (c) occupancy of the 16 cells on allowed positions (Lemma 7 gate):
+            _h2 = torch.bincount(mot_idx[_allowed].flatten(),
+                                 minlength=self.num_motion_cells).view(
+                                 self.num_motion_iou_bins, self.num_dt_bins)
+            # (d) edge-calibration quantiles of ALLOWED motion IoU:
+            _miou_keyspace = einops.repeat(mot_iou, "bg l1 nt -> bg l1 (tk nt)", tk=_T)
+            _v = _miou_keyspace[_allowed].detach().float()
+            if _v.numel() > 0:
+                _q = torch.quantile(_v, torch.tensor([0.25, 0.50, 0.75], device=_v.device))
+                print(f"[mot-hist] ALLOWED n={_v.numel()} mean={_v.mean():.4f} "
+                      f"max={_v.max():.4f} q25/50/75={[round(x.item(), 4) for x in _q]} "
+                      f"edges={self.motion_iou_edges.tolist()}", flush=True)
+            print(f"[mot-hist] cell_occupancy(iou_bin x dt_bin)=\n{_h2.tolist()}", flush=True)
+            print(f"[mot-align] dt_min_on_allowed={float(_dt_min_allowed):.1f} "
+                  f"(must be >= 1.0) | unknown_time_spread={float(_ut_spread):.1f} "
+                  f"(must be 0.0)", flush=True)
+        # >>> END MOTION BIAS
+
 
         # Change Cross-Attn key_padding_mask and attn_mask to float:
         cross_attn_key_padding_mask = torch.masked_fill(
@@ -239,6 +359,7 @@ class IDDecoder(nn.Module):
                     self_attn_key_padding_mask, cross_attn_key_padding_mask,
                     cross_attn_mask, rel_pe_idxs,
                     sp_idx,                                  # >>> SPATIAL BIAS
+                    mot_idx,                                 # >>> MOTION BIAS (V5)
                     use_reentrant=False,
                 )
             else:
@@ -251,8 +372,8 @@ class IDDecoder(nn.Module):
                     cross_attn_mask=cross_attn_mask,
                     rel_pe_idx=rel_pe_idxs,
                     sp_idx=sp_idx,                           # >>> SPATIAL BIAS
+                    mot_idx=mot_idx,                         # >>> MOTION BIAS (V5)
                 )
-
             _unknown_id_logits = self.embed_to_word_layers[layer](unknown_embeds[..., -self.id_dim:])
             _unknown_id_masks = unknown_masks.clone()
             _unknown_id_labels = None if not self.training else unknown_id_labels
@@ -280,6 +401,7 @@ class IDDecoder(nn.Module):
             cross_attn_mask: torch.Tensor,
             rel_pe_idx: torch.Tensor,
             sp_idx: torch.Tensor,                            # >>> SPATIAL BIAS
+            mot_idx: torch.Tensor,                           # >>> MOTION BIAS (V5)
     ):
         _B, _G, _T, _N, _ = trajectory_embeds.shape
         _curr_B, _curr_G, _curr_T, _curr_N, _ = unknown_embeds.shape
@@ -303,10 +425,10 @@ class IDDecoder(nn.Module):
         # >>> cross_attn_mask holds -inf at padded/future keys; -inf + finite
         # >>> spatial bias stays -inf, so padded positions remain masked.
         
-        rel_sp_mask = self.rel_spatial_embeds[layer][sp_idx]   # (bg, l1, l2, n_heads) f32
-        rel_bias = rel_pe_mask + rel_sp_mask                   # combine in compact layout (one small add)
+        rel_sp_mask = self.rel_spatial_embeds[layer][sp_idx]    # (bg, l1, l2, n_heads) f32
+        rel_mot_mask = self.rel_motion_embeds[layer][mot_idx]   # >>> MOTION BIAS (V5): same gather pattern, f32
+        rel_bias = rel_pe_mask + rel_sp_mask + rel_mot_mask     # combine in compact layout (still ONE rearrange)
         cross_attn_mask_with_rel_pe = cross_attn_mask + einops.rearrange(rel_bias, "bg l1 l2 n -> (bg n) l1 l2")
-
         # >>> END SPATIAL BIAS
         # Apply cross-attention:
         cross_out, _ = self.cross_attn_layers[layer](
