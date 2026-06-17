@@ -29,7 +29,8 @@ CONTRASTIVE_PROJ_DIM:  128
 CONTRASTIVE_WARMUP:    500
 INFERENCE_TEMPERATURE: 1.0
 
-RESUME_MODEL: rfdetr_dancetrack_motip/checkpoint_7.pth
+RESUME_MODEL: rfdetr_dancetrack_motip/checkpoint_11.pth
 RESUME_OPTIMIZER: False
 RESUME_SCHEDULER: False
+USE_DECODER_CHECKPOINT: False
 
