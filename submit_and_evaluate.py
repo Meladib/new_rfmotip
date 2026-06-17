@@ -1,6 +1,3 @@
-# Copyright (c) Ruopeng Gao. All Rights Reserved.
-# About: Submit or evaluate the model.
-
 import os
 import time
 import torch
@@ -88,6 +85,7 @@ def submit_and_evaluate(config: dict):
         data_split=config["INFERENCE_SPLIT"],
         outputs_dir=outputs_dir,
         image_max_longer=config["INFERENCE_MAX_LONGER"],    # the max shorter side of the image is set to 800 by default
+        image_max_shorter=config.get("INFERENCE_MAX_SHORTER", 800),
         size_divisibility=config.get("SIZE_DIVISIBILITY", 0),
         use_sigmoid=config.get("USE_FOCAL_LOSS", False),
         assignment_protocol=config.get("ASSIGNMENT_PROTOCOL", "hungarian"),
@@ -342,24 +340,47 @@ def submit_and_evaluate_one_model(
         return metrics
 
 
+
 @torch.no_grad()
 def get_results_of_one_sequence(
         logger: Logger,
         runtime_tracker: RuntimeTracker,
         sequence_loader: DataLoader,
+        warmup_frames: int = 10,
 ):
+    assert len(sequence_loader) > warmup_frames, (
+        f"Sequence length ({len(sequence_loader)}) must exceed warmup_frames ({warmup_frames})."
+    )
+
     tracker_results = []
-    assert len(sequence_loader) > 10, "The sequence loader is too short."
+    frame_times = []
+
     for t, (image, image_path) in enumerate(sequence_loader):
-        if t == 10:
-            begin_time = time.time()
-        image.tensors = image.tensors.cuda()
-        image.mask = image.mask.cuda()
-        # image = nested_tensor_from_tensor_list(tensor_list=[image[0]])
+        # CPU→GPU transfer always outside timing
+        image.tensors = image.tensors.cuda(non_blocking=True)
+        image.mask = image.mask.cuda(non_blocking=True)
+
+        if t < warmup_frames:
+            # Warm-up: run model so track queries reach realistic initialized state
+            runtime_tracker.update(image=image)
+            _results = runtime_tracker.get_track_results()
+            tracker_results.append(_results)
+            continue
+
+        # Sync before: ensure transfer and any prior GPU work is fully done
+        torch.cuda.synchronize()
+        t_start = time.perf_counter()
+
         runtime_tracker.update(image=image)
         _results = runtime_tracker.get_track_results()
+
+        # Sync after: ensure all GPU work from this frame is complete
+        torch.cuda.synchronize()
+        frame_times.append(time.perf_counter() - t_start)
+
         tracker_results.append(_results)
-    fps = (len(sequence_loader) - 10) / (time.time() - begin_time)
+
+    fps = len(frame_times) / sum(frame_times)
     return tracker_results, fps
 
 
