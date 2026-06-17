@@ -1,5 +1,3 @@
-# Copyright (c) Ruopeng Gao. All Rights Reserved.
-
 import os
 import math
 import torch
@@ -519,6 +517,12 @@ def train_one_epoch(
                 metrics.update(name=k, value=v.item())
             loss /= accumulate_steps
             accelerator.backward(loss)  # use this line to replace loss.backward()
+            if step == 0:
+                for _n, _p in accelerator.unwrap_model(model).named_parameters():
+                    if "rel_spatial_embeds" in _n:    
+                        _gn = None if _p.grad is None else _p.grad.norm().item()
+                        print(f"[sp-grad] {_n} grad_norm={_gn}", flush=True)
+                        
             if (step + 1) % accumulate_steps == 0:
                 if use_accelerate_clip_norm:
                     if separate_clip_norm:
